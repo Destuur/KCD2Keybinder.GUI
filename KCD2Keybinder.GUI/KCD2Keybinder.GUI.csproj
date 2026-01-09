@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>false</UseWindowsForms>
+		<UseStaticWebAssets>true</UseStaticWebAssets>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\KCD2Keybinder.GUI.Shared\Components\Keyboard\Key.razor.cs" Link="Key.razor.cs" />
+		<Compile Include="..\KCD2Keybinder.GUI.Shared\Components\Keyboard\Keyboard.razor.cs" Link="Keyboard.razor.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\KCD2Keybinder.GUI.Shared\KCD2Keybinder.GUI.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="wwwroot\images\credits_background.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+</Project>

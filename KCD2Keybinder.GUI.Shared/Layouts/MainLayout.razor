@@ -1,0 +1,20 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="DefaultThemes.DarkTheme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@if (!isLoaded)
+{
+    <div style="position:absolute; inset:0; display:flex; justify-content:center; align-items:center; z-index:9999;">
+        <p>Lade UI...</p>
+    </div>
+}
+
+<MudLayout>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+    <StartupLoader />
+</MudLayout>

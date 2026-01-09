@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<div style="display: flex; flex-direction: column; height: 100vh;">
+	<div style="flex: 1; border: solid 1px blue; align-content: center;">
+		<MudText Typo="Typo.h4" style="text-align: center;">@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)</MudText>
+	</div>
+
+	<div style="height: 45%; border: solid 1px red; align-content: center;">
+		<MudToggleGroup T="KeyboardLayout"
+						@bind-value="keyboardLayout"
+						Outlined
+						Delimiters
+						Style="width: 20rem; position: absolute;" 
+						Class="ml-8">
+			<MudToggleItem Value="@KeyboardLayout.QWERTY" />
+			<MudToggleItem Value="@KeyboardLayout.QWERTZ" />
+		</MudToggleGroup>
+		<Keyboard ActiveKeyChanged="OnActiveKeyChanged" Layout="keyboardLayout" />
+	</div>
+</div>

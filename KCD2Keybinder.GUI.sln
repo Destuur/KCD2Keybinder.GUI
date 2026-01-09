@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36811.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2Keybinder.GUI", "KCD2Keybinder.GUI\KCD2Keybinder.GUI.csproj", "{578079FF-C296-4C9D-B0A7-1FE7AF67DD77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCD2Keybinder.GUI.Shared", "KCD2Keybinder.GUI.Shared\KCD2Keybinder.GUI.Shared.csproj", "{69C9DAEB-DCC0-E999-9ADE-94EF3342BDE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDC2Keybinder.Core", "KCD2Keybinder.Core\KDC2Keybinder.Core.csproj", "{55DB0C5C-6FBD-F8DC-43E8-6B24EA77B498}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{578079FF-C296-4C9D-B0A7-1FE7AF67DD77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{578079FF-C296-4C9D-B0A7-1FE7AF67DD77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{578079FF-C296-4C9D-B0A7-1FE7AF67DD77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{578079FF-C296-4C9D-B0A7-1FE7AF67DD77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69C9DAEB-DCC0-E999-9ADE-94EF3342BDE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69C9DAEB-DCC0-E999-9ADE-94EF3342BDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69C9DAEB-DCC0-E999-9ADE-94EF3342BDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69C9DAEB-DCC0-E999-9ADE-94EF3342BDE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55DB0C5C-6FBD-F8DC-43E8-6B24EA77B498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55DB0C5C-6FBD-F8DC-43E8-6B24EA77B498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55DB0C5C-6FBD-F8DC-43E8-6B24EA77B498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55DB0C5C-6FBD-F8DC-43E8-6B24EA77B498}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16EC5D74-4855-41DE-B299-8489091B40E2}
+	EndGlobalSection
+EndGlobal
