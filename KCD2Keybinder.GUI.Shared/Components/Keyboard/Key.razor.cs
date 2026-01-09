@@ -26,8 +26,9 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 			return KeySize switch
 			{
 				KeySize.Small => Size,
-				KeySize.Medium => 128,
+				KeySize.Medium => 102,
 				KeySize.Large => 128,
+				KeySize.Space => 384,
 				_ => Size,
 			};
 		}
@@ -37,8 +38,9 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 			return KeySize switch
 			{
 				KeySize.Small => "_content/KCD2Keybinder.GUI.Shared/images/key.png",
-				KeySize.Medium => "_content/KCD2Keybinder.GUI.Shared/images/key_middle.png",
+				KeySize.Medium => "_content/KCD2Keybinder.GUI.Shared/images/key_true_middle.png",
 				KeySize.Large => "_content/KCD2Keybinder.GUI.Shared/images/key_long.png",
+				KeySize.Space => "_content/KCD2Keybinder.GUI.Shared/images/key_space.png",
 				_ => "_content/KCD2Keybinder.GUI.Shared/images/key.png",
 			};
 		}

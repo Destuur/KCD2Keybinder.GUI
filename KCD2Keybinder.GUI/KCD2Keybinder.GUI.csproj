@@ -11,6 +11,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\fonts\kcd_display.ttf" />
+	  <Content Remove="wwwroot\fonts\kcd_light.ttf" />
+	  <Content Remove="wwwroot\fonts\kcd_regular.ttf" />
+	  <Content Remove="wwwroot\fonts\warhorse_manuscript.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Include="..\KCD2Keybinder.GUI.Shared\Components\Keyboard\Key.razor.cs" Link="Key.razor.cs" />
 		<Compile Include="..\KCD2Keybinder.GUI.Shared\Components\Keyboard\Keyboard.razor.cs" Link="Keyboard.razor.cs" />
 	</ItemGroup>
@@ -24,6 +31,13 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\KCD2Keybinder.GUI.Shared\KCD2Keybinder.GUI.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="wwwroot\fonts\kcd_light.ttf" />
+	  <Resource Include="wwwroot\fonts\kcd_display.ttf" />
+	  <Resource Include="wwwroot\fonts\kcd_regular.ttf" />
+	  <Resource Include="wwwroot\fonts\warhorse_manuscript.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>

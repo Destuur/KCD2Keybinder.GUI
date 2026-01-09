@@ -58,7 +58,7 @@
 	</div>
 	<!-- First Letters Row -->
 	<div class="keyboard-row">
-		<Key Label="tab" IsActivated="@(activeKey == "tab")" KeyPressed="OnKeyPressed" />
+		<Key Label="tab" KeySize="KeySize.Medium" IsActivated="@(activeKey == "tab")" KeyPressed="OnKeyPressed" />
 		<div>
 			<Key Label="Q" IsActivated="@(activeKey == "Q")" KeyPressed="OnKeyPressed" />
 			<Key Label="W" IsActivated="@(activeKey == "W")" KeyPressed="OnKeyPressed" />
@@ -83,11 +83,11 @@
 		</div>
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			<Key Label="\" IsActivated="@(activeKey == "\\")" KeyPressed="OnKeyPressed" />
+			<Key Label="\" KeySize="KeySize.Medium" IsActivated="@(activeKey == "\\")" KeyPressed="OnKeyPressed" />
 		}
 		else
 		{
-			<Key Label="#" IsActivated="@(activeKey == "#")" KeyPressed="OnKeyPressed" />
+			<Key Label="#" KeySize="KeySize.Medium" IsActivated="@(activeKey == "#")" KeyPressed="OnKeyPressed" />
 		}
 	</div>
 	<!-- Second Letters Row -->
@@ -138,7 +138,7 @@
 				<Key Label="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
 			}
 		</div>
-		<Key KeySize="Models.KeySize.Medium" Label="shift" IsActivated="@(activeKey == "shift")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="shift" IsActivated="@(activeKey == "shift")" KeyPressed="OnKeyPressed" />
 	</div>
 	<!-- Control Keys Row -->
 	<div class="keyboard-row">
@@ -147,7 +147,7 @@
 			<Key KeySize="Models.KeySize.Medium" Label="⊞ / ⌘" IsActivated="@(activeKey == "⊞ / ⌘")" KeyPressed="OnKeyPressed" />
 			<Key KeySize="Models.KeySize.Medium" Label="alt" IsActivated="@(activeKey == "alt")" KeyPressed="OnKeyPressed" />
 		</div>
-		<Key KeySize="Models.KeySize.Large" Label="space" IsActivated="@(activeKey == "space")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Space" Label="space" IsActivated="@(activeKey == "space")" KeyPressed="OnKeyPressed" />
 		<div>
 			<Key KeySize="Models.KeySize.Medium" Label="altgr" IsActivated="@(activeKey == "altgr")" KeyPressed="OnKeyPressed" />
 			<Key KeySize="Models.KeySize.Medium" Label="fn" IsActivated="@(activeKey == "fn")" KeyPressed="OnKeyPressed" />
