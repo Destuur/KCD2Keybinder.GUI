@@ -16,17 +16,6 @@ namespace KDC2Keybinder.Core.Services
 		public List<ModDescription> ModCollection { get; private set; } = new();
 		public List<ModDescription> ExternalModCollection { get; private set; } = new();
 
-
-		private void FillModCollection(string modPath, List<ModDescription> collection)
-		{
-			var modDescription = ReadModMetadata(modPath);
-
-			if (!collection.Any(x => x.Id == modDescription.Id))
-			{
-				collection.Add(modDescription);
-			}
-		}
-
 		public ModDescription CreateNewMod(string name, string description, string author, string version, DateTime createdOn, string modId, bool modifiesLevel, List<string> supportedGameVersions)
 		{
 			if (string.IsNullOrWhiteSpace(name) ||
@@ -56,65 +45,8 @@ namespace KDC2Keybinder.Core.Services
 			return newMod;
 		}
 
-		private ModDescription ReadModMetadata(string modPath)
-		{
-			var modFiles = Directory.GetFiles(modPath);
-			if (modFiles.Length == 0)
-			{
-				var msg = $"No files found in mod folder: {modPath}";
-				throw new FileNotFoundException(msg);
-			}
-
-			var modFileUri = modFiles.FirstOrDefault(x => x.Contains("manifest"));
-			if (string.IsNullOrEmpty(modFileUri))
-			{
-				var msg = $"Mod info file missing in {modPath}";
-				throw new FileNotFoundException(msg);
-			}
-
-			XDocument doc;
-			try
-			{
-				doc = XDocument.Load(modFileUri);
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}
-
-			var root = doc.Root ?? throw new InvalidDataException("Mod file has no root element");
-			var info = root.Element("info") ?? throw new InvalidDataException("Missing <info> element");
-
-			var modifiesLevel = bool.TryParse(info.Element("modifies_level")?.Value, out var modifies) && modifies;
-
-			var modDescription = new ModDescription
-			{
-				Name = info.Element("name")?.Value,
-				Description = info.Element("description")?.Value,
-				Author = info.Element("author")?.Value,
-				ModVersion = info.Element("version")?.Value,
-				CreatedOn = info.Element("created_on")?.Value,
-				Id = info.Element("modid")?.Value,
-				ModifiesLevel = modifiesLevel,
-			};
-
-			return modDescription;
-		}
-
-		private bool IsValidModDescription(ModDescription mod)
-		{
-			return mod != null
-				&& !string.IsNullOrWhiteSpace(mod.Id)
-				&& !string.IsNullOrWhiteSpace(mod.Name);
-		}
-
 		public bool WriteModManifest(ModDescription mod)
 		{
-			if (IsValidModDescription(mod) == false)
-			{
-				return false;
-			}
-
 			try
 			{
 				var modRootPath = Path.Combine(modDirectory, "zz" + mod.Id);
