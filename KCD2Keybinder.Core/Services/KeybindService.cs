@@ -7,20 +7,28 @@ namespace KDC2Keybinder.Core.Services
 {
 	public class KeybindService
 	{
-		private readonly string gameRoot;
 		private readonly string dataRoot;
 		private readonly string modsRoot;
 
-		private readonly Dictionary<string, ActionMap> vanillaActionMaps = new();
-		private readonly Dictionary<string, Superaction> vanillaSuperactions = new();
-		private XDocument vanillaDefaultProfileDoc;
-		private XDocument vanillaSuperactionsDoc;
+		private readonly Dictionary<string, ActionMap> vanillaActionMaps = [];
+		private readonly Dictionary<string, Superaction> vanillaSuperactions = [];
+		private XDocument? vanillaDefaultProfileDoc;
+		private XDocument? vanillaSuperactionsDoc;
 
-		public KeybindService(string gameRoot, string dataRoot, string modsRoot)
+		public KeybindService(string dataRoot, string modsRoot)
 		{
-			this.gameRoot = gameRoot;
 			this.dataRoot = dataRoot;
 			this.modsRoot = modsRoot;
+		}
+
+		public Dictionary<string, ActionMap> GetVanillaActionMaps()
+		{
+			return vanillaActionMaps;
+		}
+
+		public Dictionary<string, Superaction> GetVanillaSuperactions()
+		{
+			return vanillaSuperactions;
 		}
 
 		#region --- Vanilla Loading ---
@@ -65,14 +73,14 @@ namespace KDC2Keybinder.Core.Services
 					{
 						var action = new Action
 						{
-							name = actionEl.Attribute("name")?.Value ?? "",
-							map = actionEl.Attribute("map")?.Value ?? "",
-							onPress = actionEl.Attribute("onPress")?.Value ?? "",
-							onRelease = actionEl.Attribute("onRelease")?.Value ?? "",
-							onHold = actionEl.Attribute("onHold")?.Value ?? "",
-							retriggerable = actionEl.Attribute("retriggerable")?.Value ?? "",
-							holdTriggerDelay = actionEl.Attribute("holdTriggerDelay")?.Value ?? "",
-							holdRepeatDelay = actionEl.Attribute("holdRepeatDelay")?.Value ?? ""
+							Name = actionEl.Attribute("name")?.Value ?? "",
+							Map = actionEl.Attribute("map")?.Value ?? "",
+							OnPress = actionEl.Attribute("onPress")?.Value ?? "",
+							OnRelease = actionEl.Attribute("onRelease")?.Value ?? "",
+							OnHold = actionEl.Attribute("onHold")?.Value ?? "",
+							Retriggerable = actionEl.Attribute("retriggerable")?.Value ?? "",
+							HoldTriggerDelay = actionEl.Attribute("holdTriggerDelay")?.Value ?? "",
+							HoldRepeatDelay = actionEl.Attribute("holdRepeatDelay")?.Value ?? ""
 						};
 						map.Actions.Add(action);
 					}
@@ -106,14 +114,14 @@ namespace KDC2Keybinder.Core.Services
 				{
 					sa.Actions.Add(new Action
 					{
-						name = act.Attribute("name")?.Value ?? "",
-						map = act.Attribute("map")?.Value ?? "",
-						onPress = act.Attribute("onPress")?.Value ?? "",
-						onRelease = act.Attribute("onRelease")?.Value ?? "",
-						onHold = act.Attribute("onHold")?.Value ?? "",
-						retriggerable = act.Attribute("retriggerable")?.Value ?? "",
-						holdTriggerDelay = act.Attribute("holdTriggerDelay")?.Value ?? "",
-						holdRepeatDelay = act.Attribute("holdRepeatDelay")?.Value ?? ""
+						Name = act.Attribute("name")?.Value ?? "",
+						Map = act.Attribute("map")?.Value ?? "",
+						OnPress = act.Attribute("onPress")?.Value ?? "",
+						OnRelease = act.Attribute("onRelease")?.Value ?? "",
+						OnHold = act.Attribute("onHold")?.Value ?? "",
+						Retriggerable = act.Attribute("retriggerable")?.Value ?? "",
+						HoldTriggerDelay = act.Attribute("holdTriggerDelay")?.Value ?? "",
+						HoldRepeatDelay = act.Attribute("holdRepeatDelay")?.Value ?? ""
 					});
 				}
 
@@ -140,7 +148,7 @@ namespace KDC2Keybinder.Core.Services
 
 			foreach (var map in vanillaActionMaps.Values)
 			{
-				map.Actions.RemoveAll(a => !string.IsNullOrWhiteSpace(a.map) && !existingModIds.Contains(a.map));
+				map.Actions.RemoveAll(a => !string.IsNullOrWhiteSpace(a.Map) && !existingModIds.Contains(a.Map));
 			}
 
 			foreach (var kb in modKeybinds)
@@ -158,14 +166,14 @@ namespace KDC2Keybinder.Core.Services
 					vanillaActionMaps[kb.Map] = map;
 				}
 
-				if (!map.Actions.Any(a => a.name == kb.Name))
+				if (!map.Actions.Any(a => a.Name == kb.Name))
 				{
 					map.Actions.Add(new Action
 					{
-						name = kb.Name,
-						map = kb.Map,
-						onPress = "1",
-						onRelease = "1"
+						Name = kb.Name,
+						Map = kb.Map,
+						OnPress = "1",
+						OnRelease = "1"
 					});
 				}
 			}

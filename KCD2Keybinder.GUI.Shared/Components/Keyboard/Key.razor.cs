@@ -7,6 +7,8 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 	{
 		[Parameter, EditorRequired]
 		public string Label { get; set; } = string.Empty;
+		[Parameter, EditorRequired]
+		public string Value { get; set; } = string.Empty;
 		[Parameter]
 		public int Size { get; set; } = 64;
 		[Parameter]
@@ -18,7 +20,7 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 
 		private async Task ClickButton()
 		{
-			await KeyPressed.InvokeAsync(Label);
+			await KeyPressed.InvokeAsync(Value);
 		}
 
 		private int GetWidth()

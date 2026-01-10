@@ -5,6 +5,6 @@ namespace KDC2Keybinder.Core.Models
 	public class IncludeConflict
 	{
 		[XmlAttribute("conflict")]
-		public string Conflict { get; set; }
+		public string Conflict { get; set; } = string.Empty;
 	}
 }

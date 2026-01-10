@@ -24,7 +24,7 @@ namespace KDC2Keybinder.Core
 		public void Generate()
 		{
 			var vanillaPakPath = Path.Combine(dataDir, "IPL_GameData.pak");
-			var keybindService = new KeybindService(gameDir, dataDir, modsDir);
+			var keybindService = new KeybindService(dataDir, modsDir);
 			keybindService.LoadVanillaPak("IPL_GameData.pak");
 			var modKeybinds = keybindService.ScanMods();
 

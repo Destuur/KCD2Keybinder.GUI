@@ -1,157 +1,156 @@
 ﻿<div class="keyboard">
 	<!-- F-Keys -->
 	<div class="keyboard-row" style="padding-bottom: 16px;">
-		<Key Label="esc" IsActivated="@(activeKey == "esc")" KeyPressed="OnKeyPressed" />
+		<Key Label="esc" Value="escape" IsActivated="@(activeKey == "escape")" KeyPressed="OnKeyPressed" />
 		<div>
-			<Key Label="F1" IsActivated="@(activeKey == "F1")" KeyPressed="OnKeyPressed" />
-			<Key Label="F2" IsActivated="@(activeKey == "F2")" KeyPressed="OnKeyPressed" />
-			<Key Label="F3" IsActivated="@(activeKey == "F3")" KeyPressed="OnKeyPressed" />
-			<Key Label="F4" IsActivated="@(activeKey == "F4")" KeyPressed="OnKeyPressed" />
+			<Key Label="F1" Value="F1" IsActivated="@(activeKey == "F1")" KeyPressed="OnKeyPressed" />
+			<Key Label="F2" Value="F2" IsActivated="@(activeKey == "F2")" KeyPressed="OnKeyPressed" />
+			<Key Label="F3" Value="F3" IsActivated="@(activeKey == "F3")" KeyPressed="OnKeyPressed" />
+			<Key Label="F4" Value="F4" IsActivated="@(activeKey == "F4")" KeyPressed="OnKeyPressed" />
 		</div>
 		<div>
-			<Key Label="F5" IsActivated="@(activeKey == "F5")" KeyPressed="OnKeyPressed" />
-			<Key Label="F6" IsActivated="@(activeKey == "F6")" KeyPressed="OnKeyPressed" />
-			<Key Label="F7" IsActivated="@(activeKey == "F7")" KeyPressed="OnKeyPressed" />
-			<Key Label="F8" IsActivated="@(activeKey == "F8")" KeyPressed="OnKeyPressed" />
+			<Key Label="F5" Value="F5" IsActivated="@(activeKey == "F5")" KeyPressed="OnKeyPressed" />
+			<Key Label="F6" Value="F6" IsActivated="@(activeKey == "F6")" KeyPressed="OnKeyPressed" />
+			<Key Label="F7" Value="F7" IsActivated="@(activeKey == "F7")" KeyPressed="OnKeyPressed" />
+			<Key Label="F8" Value="F8" IsActivated="@(activeKey == "F8")" KeyPressed="OnKeyPressed" />
 		</div>
 		<div>
-			<Key Label="F9" IsActivated="@(activeKey == "F9")" KeyPressed="OnKeyPressed" />
-			<Key Label="F10" IsActivated="@(activeKey == "F10")" KeyPressed="OnKeyPressed" />
-			<Key Label="F11" IsActivated="@(activeKey == "F11")" KeyPressed="OnKeyPressed" />
-			<Key Label="F12" IsActivated="@(activeKey == "F12")" KeyPressed="OnKeyPressed" />
+			<Key Label="F9" Value="F9" IsActivated="@(activeKey == "F9")" KeyPressed="OnKeyPressed" />
+			<Key Label="F10" Value="F10" IsActivated="@(activeKey == "F10")" KeyPressed="OnKeyPressed" />
+			<Key Label="F11" Value="F11" IsActivated="@(activeKey == "F11")" KeyPressed="OnKeyPressed" />
+			<Key Label="F12" Value="F12" IsActivated="@(activeKey == "F12")" KeyPressed="OnKeyPressed" />
 		</div>
 	</div>
 	<!-- Numbers Row -->
 	<div class="keyboard-row">
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			
-			<Key Label="`" IsActivated="@(activeKey == "`")" KeyPressed="OnKeyPressed" />
+			<Key Label="`" Value="`" IsActivated="@(activeKey == "`")" KeyPressed="OnKeyPressed" />
 		}
 		else
 		{
-			<Key Label="^" IsActivated="@(activeKey == "^")" KeyPressed="OnKeyPressed" />
+			<Key Label="^" Value="^" IsActivated="@(activeKey == "^")" KeyPressed="OnKeyPressed" />
 		}
 		<div>
-			<Key Label="1" IsActivated="@(activeKey == "1")" KeyPressed="OnKeyPressed" />
-			<Key Label="2" IsActivated="@(activeKey == "2")" KeyPressed="OnKeyPressed" />
-			<Key Label="3" IsActivated="@(activeKey == "3")" KeyPressed="OnKeyPressed" />
-			<Key Label="4" IsActivated="@(activeKey == "4")" KeyPressed="OnKeyPressed" />
-			<Key Label="5" IsActivated="@(activeKey == "5")" KeyPressed="OnKeyPressed" />
-			<Key Label="6" IsActivated="@(activeKey == "6")" KeyPressed="OnKeyPressed" />
-			<Key Label="7" IsActivated="@(activeKey == "7")" KeyPressed="OnKeyPressed" />
-			<Key Label="8" IsActivated="@(activeKey == "8")" KeyPressed="OnKeyPressed" />
-			<Key Label="9" IsActivated="@(activeKey == "9")" KeyPressed="OnKeyPressed" />
-			<Key Label="0" IsActivated="@(activeKey == "0")" KeyPressed="OnKeyPressed" />
+			<Key Label="1" Value="1" IsActivated="@(activeKey == "1")" KeyPressed="OnKeyPressed" />
+			<Key Label="2" Value="2" IsActivated="@(activeKey == "2")" KeyPressed="OnKeyPressed" />
+			<Key Label="3" Value="3" IsActivated="@(activeKey == "3")" KeyPressed="OnKeyPressed" />
+			<Key Label="4" Value="4" IsActivated="@(activeKey == "4")" KeyPressed="OnKeyPressed" />
+			<Key Label="5" Value="5" IsActivated="@(activeKey == "5")" KeyPressed="OnKeyPressed" />
+			<Key Label="6" Value="6" IsActivated="@(activeKey == "6")" KeyPressed="OnKeyPressed" />
+			<Key Label="7" Value="7" IsActivated="@(activeKey == "7")" KeyPressed="OnKeyPressed" />
+			<Key Label="8" Value="8" IsActivated="@(activeKey == "8")" KeyPressed="OnKeyPressed" />
+			<Key Label="9" Value="9" IsActivated="@(activeKey == "9")" KeyPressed="OnKeyPressed" />
+			<Key Label="0" Value="0" IsActivated="@(activeKey == "0")" KeyPressed="OnKeyPressed" />
 			@if (Layout == KeyboardLayout.QWERTY)
 			{
-				<Key Label="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
-				<Key Label="=" IsActivated="@(activeKey == "=")" KeyPressed="OnKeyPressed" />
+				<Key Label="-" Value="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
+				<Key Label="=" Value="=" IsActivated="@(activeKey == "=")" KeyPressed="OnKeyPressed" />
 			}
 			else
 			{
-				<Key Label="ß" IsActivated="@(activeKey == "ß")" KeyPressed="OnKeyPressed" />
-				<Key Label="´" IsActivated="@(activeKey == "´")" KeyPressed="OnKeyPressed" />
+				<Key Label="ß" Value="ß" IsActivated="@(activeKey == "ß")" KeyPressed="OnKeyPressed" />
+				<Key Label="´" Value="´" IsActivated="@(activeKey == "´")" KeyPressed="OnKeyPressed" />
 			}
 		</div>
-		<Key KeySize="Models.KeySize.Large" Label="backspace" IsActivated="@(activeKey == "backspace")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="backspace" Value="backspace" IsActivated="@(activeKey == "backspace")" KeyPressed="OnKeyPressed" />
 	</div>
 	<!-- First Letters Row -->
 	<div class="keyboard-row">
-		<Key Label="tab" KeySize="KeySize.Medium" IsActivated="@(activeKey == "tab")" KeyPressed="OnKeyPressed" />
+		<Key Label="tab" Value="tab" KeySize="KeySize.Medium" IsActivated="@(activeKey == "tab")" KeyPressed="OnKeyPressed" />
 		<div>
-			<Key Label="Q" IsActivated="@(activeKey == "Q")" KeyPressed="OnKeyPressed" />
-			<Key Label="W" IsActivated="@(activeKey == "W")" KeyPressed="OnKeyPressed" />
-			<Key Label="E" IsActivated="@(activeKey == "E")" KeyPressed="OnKeyPressed" />
-			<Key Label="R" IsActivated="@(activeKey == "R")" KeyPressed="OnKeyPressed" />
-			<Key Label="T" IsActivated="@(activeKey == "T")" KeyPressed="OnKeyPressed" />
-			<Key Label="Y" IsActivated="@(activeKey == "Y")" KeyPressed="OnKeyPressed" />
-			<Key Label="U" IsActivated="@(activeKey == "U")" KeyPressed="OnKeyPressed" />
-			<Key Label="I" IsActivated="@(activeKey == "I")" KeyPressed="OnKeyPressed" />
-			<Key Label="O" IsActivated="@(activeKey == "O")" KeyPressed="OnKeyPressed" />
-			<Key Label="P" IsActivated="@(activeKey == "P")" KeyPressed="OnKeyPressed" />
+			<Key Label="Q" Value="Q" IsActivated="@(activeKey == "Q")" KeyPressed="OnKeyPressed" />
+			<Key Label="W" Value="W" IsActivated="@(activeKey == "W")" KeyPressed="OnKeyPressed" />
+			<Key Label="E" Value="E" IsActivated="@(activeKey == "E")" KeyPressed="OnKeyPressed" />
+			<Key Label="R" Value="R" IsActivated="@(activeKey == "R")" KeyPressed="OnKeyPressed" />
+			<Key Label="T" Value="T" IsActivated="@(activeKey == "T")" KeyPressed="OnKeyPressed" />
+			<Key Label="Y" Value="Y" IsActivated="@(activeKey == "Y")" KeyPressed="OnKeyPressed" />
+			<Key Label="U" Value="U" IsActivated="@(activeKey == "U")" KeyPressed="OnKeyPressed" />
+			<Key Label="I" Value="I" IsActivated="@(activeKey == "I")" KeyPressed="OnKeyPressed" />
+			<Key Label="O" Value="O" IsActivated="@(activeKey == "O")" KeyPressed="OnKeyPressed" />
+			<Key Label="P" Value="P" IsActivated="@(activeKey == "P")" KeyPressed="OnKeyPressed" />
 			@if (Layout == KeyboardLayout.QWERTY)
 			{
-				<Key Label="[" IsActivated="@(activeKey == "[")" KeyPressed="OnKeyPressed" />
-				<Key Label="]" IsActivated="@(activeKey == "]")" KeyPressed="OnKeyPressed" />
+				<Key Label="[" Value="[" IsActivated="@(activeKey == "[")" KeyPressed="OnKeyPressed" />
+				<Key Label="]" Value="]" IsActivated="@(activeKey == "]")" KeyPressed="OnKeyPressed" />
 			}
 			else
 			{
-				<Key Label="ü" IsActivated="@(activeKey == "ü")" KeyPressed="OnKeyPressed" />
-				<Key Label="+" IsActivated="@(activeKey == "+")" KeyPressed="OnKeyPressed" />
+				<Key Label="ü" Value="ü" IsActivated="@(activeKey == "ü")" KeyPressed="OnKeyPressed" />
+				<Key Label="+" Value="+" IsActivated="@(activeKey == "+")" KeyPressed="OnKeyPressed" />
 			}
 		</div>
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			<Key Label="\" KeySize="KeySize.Medium" IsActivated="@(activeKey == "\\")" KeyPressed="OnKeyPressed" />
+			<Key Label="\" Value="\" KeySize="KeySize.Medium" IsActivated="@(activeKey == "\\")" KeyPressed="OnKeyPressed" />
 		}
 		else
 		{
-			<Key Label="#" KeySize="KeySize.Medium" IsActivated="@(activeKey == "#")" KeyPressed="OnKeyPressed" />
+			<Key Label="#" Value="#" KeySize="KeySize.Medium" IsActivated="@(activeKey == "#")" KeyPressed="OnKeyPressed" />
 		}
 	</div>
 	<!-- Second Letters Row -->
 	<div class="keyboard-row">
-		<Key KeySize="Models.KeySize.Large" Label="caps" IsActivated="@(activeKey == "caps")" KeyPressed="OnKeyPressed" />
-		<Key Label="A" IsActivated="@(activeKey == "A")" KeyPressed="OnKeyPressed" />
-		<Key Label="S" IsActivated="@(activeKey == "S")" KeyPressed="OnKeyPressed" />
-		<Key Label="D" IsActivated="@(activeKey == "D")" KeyPressed="OnKeyPressed" />
-		<Key Label="F" IsActivated="@(activeKey == "F")" KeyPressed="OnKeyPressed" />
-		<Key Label="G" IsActivated="@(activeKey == "G")" KeyPressed="OnKeyPressed" />
-		<Key Label="H" IsActivated="@(activeKey == "H")" KeyPressed="OnKeyPressed" />
-		<Key Label="J" IsActivated="@(activeKey == "J")" KeyPressed="OnKeyPressed" />
-		<Key Label="K" IsActivated="@(activeKey == "K")" KeyPressed="OnKeyPressed" />
-		<Key Label="L" IsActivated="@(activeKey == "L")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="caps" Value="capslock" IsActivated="@(activeKey == "capslock")" KeyPressed="OnKeyPressed" />
+		<Key Label="A" Value="A" IsActivated="@(activeKey == "A")" KeyPressed="OnKeyPressed" />
+		<Key Label="S" Value="S" IsActivated="@(activeKey == "S")" KeyPressed="OnKeyPressed" />
+		<Key Label="D" Value="D" IsActivated="@(activeKey == "D")" KeyPressed="OnKeyPressed" />
+		<Key Label="F" Value="F" IsActivated="@(activeKey == "F")" KeyPressed="OnKeyPressed" />
+		<Key Label="G" Value="G" IsActivated="@(activeKey == "G")" KeyPressed="OnKeyPressed" />
+		<Key Label="H" Value="H" IsActivated="@(activeKey == "H")" KeyPressed="OnKeyPressed" />
+		<Key Label="J" Value="J" IsActivated="@(activeKey == "J")" KeyPressed="OnKeyPressed" />
+		<Key Label="K" Value="K" IsActivated="@(activeKey == "K")" KeyPressed="OnKeyPressed" />
+		<Key Label="L" Value="L" IsActivated="@(activeKey == "L")" KeyPressed="OnKeyPressed" />
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			<Key Label=";" IsActivated="@(activeKey == ";")" KeyPressed="OnKeyPressed" />
-			<Key Label="'" IsActivated="@(activeKey == "'")" KeyPressed="OnKeyPressed" />
+			<Key Label=";" Value=";" IsActivated="@(activeKey == ";")" KeyPressed="OnKeyPressed" />
+			<Key Label="'" Value="'" IsActivated="@(activeKey == "'")" KeyPressed="OnKeyPressed" />
 		}
 		else
 		{
-			<Key Label="ö" IsActivated="@(activeKey == "ö")" KeyPressed="OnKeyPressed" />
-			<Key Label="ä" IsActivated="@(activeKey == "ä")" KeyPressed="OnKeyPressed" />
+			<Key Label="ö" Value="ö" IsActivated="@(activeKey == "ö")" KeyPressed="OnKeyPressed" />
+			<Key Label="ä" Value="ä" IsActivated="@(activeKey == "ä")" KeyPressed="OnKeyPressed" />
 		}
-		<Key KeySize="Models.KeySize.Large" Label="enter" IsActivated="@(activeKey == "enter")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="enter" Value="enter" IsActivated="@(activeKey == "enter")" KeyPressed="OnKeyPressed" />
 	</div>
 	<!-- Third Letters Row -->
 	<div class="keyboard-row">
-		<Key KeySize="Models.KeySize.Large" Label="shift" IsActivated="@(activeKey == "shift")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="shift" Value="lshift" IsActivated="@(activeKey == "lshift")" KeyPressed="OnKeyPressed" />
 		<div>
-			<Key Label="Z" IsActivated="@(activeKey == "Z")" KeyPressed="OnKeyPressed" />
-			<Key Label="X" IsActivated="@(activeKey == "X")" KeyPressed="OnKeyPressed" />
-			<Key Label="C" IsActivated="@(activeKey == "C")" KeyPressed="OnKeyPressed" />
-			<Key Label="V" IsActivated="@(activeKey == "V")" KeyPressed="OnKeyPressed" />
-			<Key Label="B" IsActivated="@(activeKey == "B")" KeyPressed="OnKeyPressed" />
-			<Key Label="N" IsActivated="@(activeKey == "N")" KeyPressed="OnKeyPressed" />
-			<Key Label="M" IsActivated="@(activeKey == "M")" KeyPressed="OnKeyPressed" />
+			<Key Label="Z" Value="Z" IsActivated="@(activeKey == "Z")" KeyPressed="OnKeyPressed" />
+			<Key Label="X" Value="X" IsActivated="@(activeKey == "X")" KeyPressed="OnKeyPressed" />
+			<Key Label="C" Value="C" IsActivated="@(activeKey == "C")" KeyPressed="OnKeyPressed" />
+			<Key Label="V" Value="V" IsActivated="@(activeKey == "V")" KeyPressed="OnKeyPressed" />
+			<Key Label="B" Value="B" IsActivated="@(activeKey == "B")" KeyPressed="OnKeyPressed" />
+			<Key Label="N" Value="N" IsActivated="@(activeKey == "N")" KeyPressed="OnKeyPressed" />
+			<Key Label="M" Value="M" IsActivated="@(activeKey == "M")" KeyPressed="OnKeyPressed" />
 			@if (Layout == KeyboardLayout.QWERTY)
 			{
-				<Key Label="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" />
-				<Key Label="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" />
-				<Key Label="/" IsActivated="@(activeKey == "/")" KeyPressed="OnKeyPressed" />
+				<Key Label="," Value="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" />
+				<Key Label="." Value="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" />
+				<Key Label="/" Value="/" IsActivated="@(activeKey == "/")" KeyPressed="OnKeyPressed" />
 			}
 			else
 			{
-				<Key Label="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" />
-				<Key Label="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" />
-				<Key Label="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
+				<Key Label="," Value="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" />
+				<Key Label="." Value="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" />
+				<Key Label="-" Value="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
 			}
 		</div>
-		<Key KeySize="Models.KeySize.Large" Label="shift" IsActivated="@(activeKey == "shift")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="shift" Value="rshift" IsActivated="@(activeKey == "rshift")" KeyPressed="OnKeyPressed" />
 	</div>
 	<!-- Control Keys Row -->
 	<div class="keyboard-row">
 		<div>
-			<Key KeySize="Models.KeySize.Medium" Label="ctrl" IsActivated="@(activeKey == "ctrl")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="⊞ / ⌘" IsActivated="@(activeKey == "⊞ / ⌘")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="alt" IsActivated="@(activeKey == "alt")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="lctrl" IsActivated="@(activeKey == "lctrl")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="⊞ / ⌘" Value="⊞ / ⌘" IsActivated="@(activeKey == "⊞ / ⌘")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="alt" Value="lalt" IsActivated="@(activeKey == "lalt")" KeyPressed="OnKeyPressed" />
 		</div>
-		<Key KeySize="Models.KeySize.Space" Label="space" IsActivated="@(activeKey == "space")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Space" Label="space" Value="space" IsActivated="@(activeKey == "space")" KeyPressed="OnKeyPressed" />
 		<div>
-			<Key KeySize="Models.KeySize.Medium" Label="altgr" IsActivated="@(activeKey == "altgr")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="fn" IsActivated="@(activeKey == "fn")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="ctrl" IsActivated="@(activeKey == "ctrl")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="altgr" Value="altgr" IsActivated="@(activeKey == "altgr")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="fn" Value="fn" IsActivated="@(activeKey == "fn")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="rctrl" IsActivated="@(activeKey == "rctrl")" KeyPressed="OnKeyPressed" />
 		</div>
 	</div>
 </div>

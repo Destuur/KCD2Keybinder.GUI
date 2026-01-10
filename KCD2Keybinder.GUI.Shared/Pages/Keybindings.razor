@@ -1,8 +1,80 @@
 ﻿@page "/"
 
 <div style="display: flex; flex-direction: column; height: 100vh;">
-	<div style="flex: 1; border: solid 1px blue; align-content: center;">
-		<MudText Typo="Typo.h4" style="text-align: center;">@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)</MudText>
+	<div style="flex: 1; display: flex; border: solid 1px blue; align-content: center; padding: 16px;">
+
+		<div class="keybind-list">
+
+			<!-- HEADER -->
+			<div class="keybind-header">
+				<div class="col-name">Name</div>
+				<div class="col-a">Actions</div>
+				<div class="col-b">Control</div>
+			</div>
+
+			<!-- SCROLLABLE LIST -->
+			<div class="keybind-body">
+				@foreach (var superaction in GetKeybindSuperactions())
+				{
+					<div class="keybind-row" onclick="@(() => SelectSuperaction(superaction))">
+						<div class="col-name">
+							<MudText style="font-family: KCD;">
+								@superaction.Name
+							</MudText>
+						</div>
+						<div class="col-a">
+							<MudText style="font-family: KCD;">
+								@superaction.Actions.Count
+							</MudText>
+						</div>
+						<div class="col-b">
+							<MudText style="font-family: KCD;">
+								@superaction.Controls.Count
+							</MudText>
+						</div>
+					</div>
+				}
+			</div>
+
+		</div>
+		<div style="flex: 1; border: solid 1px blue; align-content: center;">
+			<div class="keybind-list">
+
+				<!-- HEADER -->
+				<div class="keybind-header">
+					<div class="col-name">Name</div>
+					<div class="col-a">Actions</div>
+					<div class="col-b">Control</div>
+				</div>
+
+				<!-- SCROLLABLE LIST -->
+				<div class="keybind-body">
+					@foreach (var control in selectedSuperaction?.Controls ?? [])
+					{
+						<div class="keybind-row">
+							<div class="col-name">
+								<MudText style="font-family: KCD;">
+									@control.Input
+								</MudText>
+							</div>
+							<div class="col-a">
+								<MudText style="font-family: KCD;">
+									@control.Controller
+								</MudText>
+							</div>
+						</div>
+					}
+				</div>
+
+			</div>
+		</div>
+		<div style="flex: 1; border: solid 1px blue; align-content: center;">
+			<MudText Typo="Typo.h4" style="text-align: center;">@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)</MudText>
+
+		</div>
+		<div style="flex: 1; border: solid 1px blue; align-content: center;"></div>
+		<div style="flex: 1; border: solid 1px blue; align-content: center;"></div>
+
 	</div>
 
 	<div style="height: 45%; border: solid 1px red; align-content: center;">
@@ -10,7 +82,7 @@
 						@bind-value="keyboardLayout"
 						Outlined
 						Delimiters
-						Style="width: 20rem; position: absolute;" 
+						Style="width: 20rem; position: absolute;"
 						Class="ml-8">
 			<MudToggleItem Value="@KeyboardLayout.QWERTY" />
 			<MudToggleItem Value="@KeyboardLayout.QWERTZ" />
@@ -18,3 +90,40 @@
 		<Keyboard ActiveKeyChanged="OnActiveKeyChanged" Layout="keyboardLayout" />
 	</div>
 </div>
+
+<style>
+	.keybind-list {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		height: 100%;
+		border: 1px solid blue;
+	}
+
+	.keybind-header,
+	.keybind-row {
+		display: flex;
+		padding: 4px 0;
+		border-bottom: 1px solid blue;
+	}
+
+	.keybind-header {
+		font-weight: bold;
+	}
+
+	.keybind-body {
+		flex: 1;
+		overflow-y: auto;
+	}
+
+	.col-name {
+		flex: 3;
+		text-align: center;
+	}
+
+	.col-a,
+	.col-b {
+		flex: 1;
+		text-align: center;
+	}
+</style>

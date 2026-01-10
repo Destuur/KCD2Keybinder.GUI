@@ -16,4 +16,8 @@
 		<PackageReference Include="MudBlazor" Version="8.15.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\KCD2Keybinder.Core\KDC2Keybinder.Core.csproj" />
+	</ItemGroup>
+
 </Project>
