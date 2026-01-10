@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace KDC2Keybinder.Core.Models
+namespace KDC2Keybinder.Core.Models.Profile.ActionMaps
 {
 	public class ActionMap
 	{
@@ -13,6 +13,6 @@ namespace KDC2Keybinder.Core.Models
 		[XmlElement("action")]
 		public List<Action> Actions { get; set; } = new();
 		[XmlElement("include")]
-		public List<string> Includes { get; set; } = new();
+		public List<IncludeActionMap> Includes { get; set; } = new();
 	}
 }

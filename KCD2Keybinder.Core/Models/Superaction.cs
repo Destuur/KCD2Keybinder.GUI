@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using KDC2Keybinder.Core.Models.Profile.ActionMaps;
+using System.Xml.Serialization;
 
 namespace KDC2Keybinder.Core.Models
 {

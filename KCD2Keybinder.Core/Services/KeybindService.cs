@@ -1,7 +1,8 @@
 ﻿using KDC2Keybinder.Core.Models;
+using KDC2Keybinder.Core.Models.Profile.ActionMaps;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Action = KDC2Keybinder.Core.Models.Action;
+using Action = KDC2Keybinder.Core.Models.Profile.ActionMaps.Action;
 
 namespace KDC2Keybinder.Core.Services
 {
@@ -10,8 +11,8 @@ namespace KDC2Keybinder.Core.Services
 		private readonly string dataRoot;
 		private readonly string modsRoot;
 
-		private readonly Dictionary<string, ActionMap> vanillaActionMaps = [];
-		private readonly Dictionary<string, Superaction> vanillaSuperactions = [];
+		private KeybindsDescription? vanillaKeybindDescription;
+
 		private XDocument? vanillaDefaultProfileDoc;
 		private XDocument? vanillaSuperactionsDoc;
 
@@ -21,14 +22,9 @@ namespace KDC2Keybinder.Core.Services
 			this.modsRoot = modsRoot;
 		}
 
-		public Dictionary<string, ActionMap> GetVanillaActionMaps()
+		public KeybindsDescription? GetVanillaActionMaps()
 		{
-			return vanillaActionMaps;
-		}
-
-		public Dictionary<string, Superaction> GetVanillaSuperactions()
-		{
-			return vanillaSuperactions;
+			return vanillaKeybindDescription;
 		}
 
 		#region --- Vanilla Loading ---
@@ -40,22 +36,27 @@ namespace KDC2Keybinder.Core.Services
 				throw new FileNotFoundException("Vanilla .pak file not found.", pakPath);
 			using var reader = new PakReader(pakPath);
 
+			if (vanillaKeybindDescription is null)
+			{
+				vanillaKeybindDescription = new KeybindsDescription();
+			}
+
 			var defaultProfileXml = reader.ReadFile("Libs/Config/defaultProfile.xml");
 			if (!string.IsNullOrEmpty(defaultProfileXml))
 			{
 				vanillaDefaultProfileDoc = XDocument.Parse(defaultProfileXml);
-				ParseDefaultProfile(defaultProfileXml, vanillaActionMaps);
+				ParseDefaultProfile(defaultProfileXml, vanillaKeybindDescription);
 			}
 
 			var keybindXml = reader.ReadFile("Libs/Config/keybindSuperactions.xml");
 			if (!string.IsNullOrEmpty(keybindXml))
 			{
 				vanillaSuperactionsDoc = XDocument.Parse(keybindXml);
-				ParseSuperactions(keybindXml, vanillaSuperactions);
+				ParseSuperactions(keybindXml, vanillaKeybindDescription);
 			}
 		}
 
-		private void ParseDefaultProfile(string xmlContent, Dictionary<string, ActionMap> target)
+		private void ParseDefaultProfile(string xmlContent, KeybindsDescription target)
 		{
 			try
 			{
@@ -85,7 +86,7 @@ namespace KDC2Keybinder.Core.Services
 						map.Actions.Add(action);
 					}
 
-					target[map.Name] = map;
+					target. = map;
 				}
 			}
 			catch (Exception)
@@ -95,7 +96,7 @@ namespace KDC2Keybinder.Core.Services
 			}
 		}
 
-		private void ParseSuperactions(string xmlContent, Dictionary<string, Superaction> target)
+		private void ParseSuperactions(string xmlContent, KeybindsDescription target)
 		{
 			var doc = XDocument.Parse(xmlContent);
 			if (doc.Root == null) return;
@@ -137,6 +138,8 @@ namespace KDC2Keybinder.Core.Services
 				target[sa.Name] = sa;
 			}
 		}
+
+		#endregion
 
 		#region --- DefaultProfile Merge & Export ---
 
@@ -281,9 +284,6 @@ namespace KDC2Keybinder.Core.Services
 			dpDoc.Save(dpPath);
 		}
 
-
-
-		#endregion
 
 
 		#endregion

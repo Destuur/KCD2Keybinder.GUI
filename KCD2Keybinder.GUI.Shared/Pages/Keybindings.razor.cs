@@ -1,5 +1,6 @@
 using KCD2Keybinder.GUI.Shared.Models;
 using KDC2Keybinder.Core.Models;
+using KDC2Keybinder.Core.Models.Profile.ActionMaps;
 using KDC2Keybinder.Core.Services;
 using KDC2Keybinder.Core.Utils;
 
