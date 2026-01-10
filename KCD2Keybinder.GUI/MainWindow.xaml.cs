@@ -2,7 +2,9 @@
 using KDC2Keybinder.Core.Services;
 using KDC2Keybinder.Core.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,6 +22,16 @@ namespace KCD2Keybinder.GUI
 			services.AddSingleton<IUserSettingsService, UserSettingsService>();
 			services.AddSingleton<IPathProvider, UserPathProvider>();
 			services.AddSingleton<ModKeybindManager>();
+
+			var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			var logPath = Path.Combine(appData, "KCD2Keybinder", "KeybindSuperactions.log");
+
+			services.AddLogging(builder =>
+			{
+				builder.ClearProviders();
+				builder.AddProvider(new FileLoggerProvider(logPath));
+				builder.SetMinimumLevel(LogLevel.Information);
+			});
 #if DEBUG
 			services.AddBlazorWebViewDeveloperTools();
 #endif

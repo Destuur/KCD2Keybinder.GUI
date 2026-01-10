@@ -1,4 +1,6 @@
 ﻿using KDC2Keybinder.Core.Models;
+using KDC2Keybinder.Core.Utils;
+using Microsoft.Extensions.Logging;
 using System.IO.Compression;
 using System.Xml.Linq;
 
@@ -6,11 +8,13 @@ namespace KDC2Keybinder.Core.Services
 {
 	public class ModService
 	{
-		private string modDirectory;
+		private readonly ILogger<ModService> logger;
+		private readonly IPathProvider pathProvider;
 
-		public ModService(string modDirectory)
+		public ModService(ILogger<ModService> logger, IPathProvider pathProvider)
 		{
-			this.modDirectory = modDirectory;
+			this.logger = logger;
+			this.pathProvider = pathProvider;
 		}
 
 		public List<ModDescription> ModCollection { get; private set; } = new();
@@ -49,7 +53,7 @@ namespace KDC2Keybinder.Core.Services
 		{
 			try
 			{
-				var modRootPath = Path.Combine(modDirectory, "zz" + mod.Id);
+				var modRootPath = Path.Combine(pathProvider.ModPath, "zz" + mod.Id);
 				var dataPath = Path.Combine(modRootPath, "Data");
 				var localizationPath = Path.Combine(modRootPath, "Localization");
 				var manifestPath = Path.Combine(modRootPath, "mod.manifest");

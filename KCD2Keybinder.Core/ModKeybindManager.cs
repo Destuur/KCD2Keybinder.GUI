@@ -30,7 +30,10 @@ namespace KDC2Keybinder.Core
 		{
 			var pakPath = Path.Combine(pathProvider.GamePath, "Data", pakFileName);
 			if (!File.Exists(pakPath))
+			{
+				logger.LogError("Base game .pak file not found at path: {PakPath}", pakPath);
 				throw new FileNotFoundException("Base game .pak file not found.", pakPath);
+			}
 
 			using var reader = new PakReader(pakPath);
 
@@ -50,6 +53,7 @@ namespace KDC2Keybinder.Core
 				var doc = XDocument.Parse(keybindXml);
 				BaseKeybinds = KeybindsParser.Parse(doc);
 			}
+			logger.LogInformation("Base game data loaded successfully from {PakPath}", pakPath);
 		}
 
 		#endregion
@@ -58,7 +62,11 @@ namespace KDC2Keybinder.Core
 
 		public void LoadMods(string modsRoot)
 		{
-			if (!Directory.Exists(modsRoot)) return;
+			if (!Directory.Exists(modsRoot))
+			{
+				logger.LogWarning("Mods directory does not exist at path: {ModsRoot}", modsRoot);
+				return;
+			}
 
 			foreach (var modDir in Directory.GetDirectories(modsRoot))
 			{
@@ -102,6 +110,7 @@ namespace KDC2Keybinder.Core
 					modData.Profile = (Profile)serializer.Deserialize(sr)!;
 				}
 
+				logger.LogInformation("Loaded mod: {ModId} from {ModPath}", modId, modDir);
 				Mods.Add(modData);
 			}
 		}

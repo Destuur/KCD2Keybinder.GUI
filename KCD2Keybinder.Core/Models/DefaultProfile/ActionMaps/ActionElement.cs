@@ -7,21 +7,21 @@ namespace KDC2Keybinder.Core.Models.DefaultProfile.ActionMaps
 		[XmlAttribute("name")]
 		public string Name { get; set; } = string.Empty;
 		[XmlAttribute("onPress")]
-		public string OnPress { get; set; } = string.Empty;
+		public string? OnPress { get; set; }
 		[XmlAttribute("onRelease")]
-		public string OnRelease { get; set; } = string.Empty;
+		public string? OnRelease { get; set; }
 		[XmlAttribute("onHold")]
-		public string OnHold { get; set; } = string.Empty;
+		public string? OnHold { get; set; }
 		[XmlAttribute("noModifiers")]
 		public string? NoModifiers { get; set; }
 		[XmlAttribute("keyboard")]
 		public string? Keyboard { get; set; }
 		[XmlAttribute("retriggerable")]
-		public string Retriggerable { get; set; } = string.Empty;
+		public string? Retriggerable { get; set; }
 		[XmlAttribute("holdTriggerDelay")]
-		public string HoldTriggerDelay { get; set; } = string.Empty;
+		public string? HoldTriggerDelay { get; set; }
 		[XmlAttribute("holdRepeatDelay")]
-		public string HoldRepeatDelay { get; set; } = string.Empty;
+		public string? HoldRepeatDelay { get; set; }
 		[XmlAttribute("xboxpad")]
 		public string? Xboxpad { get; set; }
 		[XmlAttribute("pspad")]
