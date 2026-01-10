@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using KDC2Keybinder.Core;
+using KDC2Keybinder.Core.Services;
+using KDC2Keybinder.Core.Utils;
+using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System.Windows;
 using System.Windows.Input;
@@ -9,14 +12,19 @@ namespace KCD2Keybinder.GUI
 	{
 		public MainWindow()
 		{
-			var serviceCollection = new ServiceCollection();
-			serviceCollection.AddWpfBlazorWebView();
-			serviceCollection.AddMudServices();
+			var services = new ServiceCollection();
+			services.AddWpfBlazorWebView();
+			services.AddMudServices();
+
+			services.AddSingleton<IFolderPickerService, FolderPickerService>();
+			services.AddSingleton<IUserSettingsService, UserSettingsService>();
+			services.AddSingleton<IPathProvider, UserPathProvider>();
+			services.AddSingleton<ModKeybindManager>();
 #if DEBUG
-			serviceCollection.AddBlazorWebViewDeveloperTools();
+			services.AddBlazorWebViewDeveloperTools();
 #endif
 
-			var serviceProvider = serviceCollection.BuildServiceProvider();
+			var serviceProvider = services.BuildServiceProvider();
 			Resources.Add("services", serviceProvider);
 
 			InitializeComponent();

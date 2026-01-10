@@ -1,8 +1,9 @@
 using KCD2Keybinder.GUI.Shared.Models;
-using KDC2Keybinder.Core.Models;
-using KDC2Keybinder.Core.Models.Profile.ActionMaps;
+using KDC2Keybinder.Core;
+using KDC2Keybinder.Core.Models.DefaultProfile.ActionMaps;
 using KDC2Keybinder.Core.Services;
 using KDC2Keybinder.Core.Utils;
+using Microsoft.AspNetCore.Components;
 
 namespace KCD2Keybinder.GUI.Shared.Pages
 {
@@ -11,50 +12,47 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 		private string? activeKey;
 		private KeyboardLayout keyboardLayout = KeyboardLayout.QWERTY;
 
-		private Dictionary<string, ActionMap>? actionMaps;
-		private Dictionary<string, Superaction>? superactions;
-		private ActionMap? selectedActionMap;
-		private Superaction? selectedSuperaction;
+		[Inject]
+		public IFolderPickerService FolderPicker { get; set; } = null!;
+		[Inject]
+		public IUserSettingsService UserSettings { get; set; } = null!;
+		[Inject]
+		public ModKeybindManager KeybindManager { get; set; } = null!;
 
-		protected override void OnInitialized()
+		private async Task PickGameFolder()
 		{
-			var keybindService = new KeybindService(Resources.DataDirectory, Resources.ModsDirectory);
-			keybindService.LoadVanillaPak(Resources.IPLGameData);
-			actionMaps = keybindService.GetVanillaActionMaps();
-			superactions = keybindService.GetVanillaSuperactions();
-		}
-
-		private List<Superaction> GetKeybindSuperactions()
-		{
-			if (activeKey is null)
-			{
-				return [];
-			}
-
-			if (superactions is null)
-			{
-				return [];
-			}
-
-			return superactions.Where(superactions => superactions.Value.Controls.Any(control => control.Input.ToLower() == activeKey.ToLower())).Select(x => x.Value).ToList();
-		}
-
-		private void SelectSuperaction(Superaction? superaction)
-		{
-			if (superaction is null)
+			var path = await FolderPicker.PickFolderAsync();
+			if (string.IsNullOrWhiteSpace(path))
 			{
 				return;
 			}
 
-			selectedSuperaction = superaction;
-			StateHasChanged();
+			UserSettings.Update(s => s.GamePath = path);
+		}
+
+		private async Task PickModFolder()
+		{
+			var path = await FolderPicker.PickFolderAsync();
+			if (string.IsNullOrWhiteSpace(path))
+			{
+				return;
+			}
+
+			UserSettings.Update(s => s.ModPath = path);
+		}
+
+		private void LoadData()
+		{
+			KeybindManager.LoadBaseGame(Resources.IPLGameData);
+			if (!string.IsNullOrEmpty(UserSettings.Current.ModPath))
+			{
+				KeybindManager.LoadMods(UserSettings.Current.ModPath);
+			}
 		}
 
 		private void OnActiveKeyChanged(string? key)
 		{
 			activeKey = key;
-			selectedActionMap = null;
-			selectedSuperaction = null;
 		}
 	}
 }

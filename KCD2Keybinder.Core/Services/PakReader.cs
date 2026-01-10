@@ -24,8 +24,7 @@ namespace KDC2Keybinder.Core.Services
 				return reader.ReadToEnd();
 			}
 
-			var fallback = _entries.Values
-				.FirstOrDefault(e => e.FullName.EndsWith(normalizedPath, StringComparison.OrdinalIgnoreCase));
+			var fallback = _entries.Values.FirstOrDefault(e => e.FullName.EndsWith(normalizedPath, StringComparison.OrdinalIgnoreCase));
 
 			if (fallback != null)
 			{

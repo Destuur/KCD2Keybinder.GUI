@@ -1,4 +1,7 @@
-﻿namespace KDC2Keybinder.Core.Models
+﻿using KDC2Keybinder.Core.Models.DefaultProfile;
+using KDC2Keybinder.Core.Models.Superactions;
+
+namespace KDC2Keybinder.Core.Models
 {
 	public class ModDescription
 	{
@@ -9,7 +12,8 @@
 		public string CreatedOn { get; set; } = string.Empty;
 		public string Id { get; set; } = string.Empty;
 		public bool ModifiesLevel { get; set; }
-		public string path { get; set; } = string.Empty;
-		public List<Keybind> Keybinds { get; set; } = new List<Keybind>();
+		public string Path { get; set; } = string.Empty;
+		public Profile? Profile { get; set; }
+		public Keybinds? Keybinds { get; set; }
 	}
 }

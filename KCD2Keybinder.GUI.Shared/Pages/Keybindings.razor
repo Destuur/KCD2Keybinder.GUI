@@ -14,7 +14,7 @@
 
 			<!-- SCROLLABLE LIST -->
 			<div class="keybind-body">
-				@foreach (var superaction in GetKeybindSuperactions())
+				@* @foreach (var superaction in GetKeybindSuperactions())
 				{
 					<div class="keybind-row" onclick="@(() => SelectSuperaction(superaction))">
 						<div class="col-name">
@@ -33,7 +33,7 @@
 							</MudText>
 						</div>
 					</div>
-				}
+				} *@
 			</div>
 
 		</div>
@@ -49,7 +49,7 @@
 
 				<!-- SCROLLABLE LIST -->
 				<div class="keybind-body">
-					@foreach (var control in selectedSuperaction?.Controls ?? [])
+					@* @foreach (var control in selectedSuperaction?.Controls ?? [])
 					{
 						<div class="keybind-row">
 							<div class="col-name">
@@ -63,14 +63,16 @@
 								</MudText>
 							</div>
 						</div>
-					}
+					} *@
 				</div>
 
 			</div>
 		</div>
 		<div style="flex: 1; border: solid 1px blue; align-content: center;">
 			<MudText Typo="Typo.h4" style="text-align: center;">@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)</MudText>
-
+			<MudButton OnClick="PickGameFolder" Variant="Variant.Filled">Pick Game Folder</MudButton>
+			<MudButton OnClick="PickModFolder" Variant="Variant.Filled">Pick Mod Folder</MudButton>
+			<MudButton OnClick="LoadData" Variant="Variant.Filled">Load KeybindData</MudButton>
 		</div>
 		<div style="flex: 1; border: solid 1px blue; align-content: center;"></div>
 		<div style="flex: 1; border: solid 1px blue; align-content: center;"></div>
