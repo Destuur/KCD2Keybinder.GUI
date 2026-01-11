@@ -1,20 +1,26 @@
 ﻿@page "/"
 
 <div style="display: flex; flex-direction: column; height: 100vh;">
-	<div style="flex: 1; display: flex; border: solid 1px blue; align-content: center; padding: 16px;">
+	<div style="height: 55%; flex: 1; display: flex; border: solid 1px blue; align-content: center; padding: 16px;">
 
 		<div class="keybind-list">
 
 			<!-- HEADER -->
 			<div class="keybind-header">
-				<div class="col-name">Name</div>
-				<div class="col-a">Actions</div>
-				<div class="col-b">Control</div>
+				<div class="col-name">
+					<MudText Typo="Typo.h6">Name</MudText>
+				</div>
+				<div class="col-a">
+					<MudText Typo="Typo.h6">Actions</MudText>
+				</div>
+				<div class="col-b">
+					<MudText Typo="Typo.h6">Control</MudText>
+				</div>
 			</div>
 
 			<!-- SCROLLABLE LIST -->
 			<div class="keybind-body">
-				@* @foreach (var superaction in GetKeybindSuperactions())
+				@foreach (var superaction in GetKeybindSuperactions())
 				{
 					<div class="keybind-row" onclick="@(() => SelectSuperaction(superaction))">
 						<div class="col-name">
@@ -33,23 +39,29 @@
 							</MudText>
 						</div>
 					</div>
-				} *@
+				}
 			</div>
 
 		</div>
-		<div style="flex: 1; border: solid 1px blue; align-content: center;">
+		<div style="flex: 1; border: solid 1px blue; align-content: center; display: flex; flex-direction: column;">
 			<div class="keybind-list">
 
 				<!-- HEADER -->
 				<div class="keybind-header">
-					<div class="col-name">Name</div>
-					<div class="col-a">Actions</div>
-					<div class="col-b">Control</div>
+					<div class="col-name">
+						<MudText Typo="Typo.h6">Name</MudText>
+					</div>
+					<div class="col-a">
+						<MudText Typo="Typo.h6">Actions</MudText>
+					</div>
+					<div class="col-b">
+						<MudText Typo="Typo.h6">Control</MudText>
+					</div>
 				</div>
 
 				<!-- SCROLLABLE LIST -->
 				<div class="keybind-body">
-					@* @foreach (var control in selectedSuperaction?.Controls ?? [])
+					@foreach (var control in selectedSuperaction?.Controls ?? [])
 					{
 						<div class="keybind-row">
 							<div class="col-name">
@@ -57,39 +69,192 @@
 									@control.Input
 								</MudText>
 							</div>
-							<div class="col-a">
+							<div class="col-a"></div>
+							<div class="col-b">
 								<MudText style="font-family: KCD;">
 									@control.Controller
 								</MudText>
 							</div>
 						</div>
-					} *@
+					}
+				</div>
+
+			</div>
+			<div class="keybind-list">
+
+				<!-- HEADER -->
+				<div class="keybind-header">
+					<div class="col-name">
+						<MudText Typo="Typo.h6">Name</MudText>
+					</div>
+					<div class="col-a">
+						<MudText Typo="Typo.h6">Actions</MudText>
+					</div>
+					<div class="col-b">
+						<MudText Typo="Typo.h6">Control</MudText>
+					</div>
+				</div>
+
+				<!-- SCROLLABLE LIST -->
+				<div class="keybind-body">
+					@foreach (var action in selectedSuperaction?.Actions ?? [])
+					{
+						<div class="keybind-row">
+							<div class="col-name">
+								<MudText style="font-family: KCD;">
+									@action.Name
+								</MudText>
+							</div>
+							<div class="col-a"></div>
+							<div class="col-b">
+								<MudText style="font-family: KCD;">
+									@action.Map
+								</MudText>
+							</div>
+						</div>
+					}
 				</div>
 
 			</div>
 		</div>
 		<div style="flex: 1; border: solid 1px blue; align-content: center;">
-			<MudText Typo="Typo.h4" style="text-align: center;">@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)</MudText>
-			<MudButton OnClick="PickGameFolder" Variant="Variant.Filled">Pick Game Folder</MudButton>
-			<MudButton OnClick="PickModFolder" Variant="Variant.Filled">Pick Mod Folder</MudButton>
-			<MudButton OnClick="LoadData" Variant="Variant.Filled">Load KeybindData</MudButton>
+			<MudText Typo="Typo.h4"
+					 style="text-align: center;">
+				@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)
+			</MudText>
+
 		</div>
-		<div style="flex: 1; border: solid 1px blue; align-content: center;"></div>
-		<div style="flex: 1; border: solid 1px blue; align-content: center;"></div>
+		<div style="flex: 1; border: solid 1px blue; align-content: center;">
+			@foreach (var mod in modMergeContext?.Mods ?? [])
+			{
+				<h3>@mod.ModId</h3>
+				<button @onclick="() => ResolveMod(mod.ModId)">Konflikte lösen</button>
+			}
+			<h4>Superactions Konflikte</h4>
+
+			@foreach (var modId in resolvableChangesPerMod.Keys)
+			{
+				<h3>@modId</h3>
+				@foreach (var conflict in resolvableChangesPerMod[modId].Superactions)
+				{
+					<div>
+						<p>@conflict.Change.Modified.Name</p>
+						<label>
+							<input type="radio" name="@conflict.Change.ModId + conflict.Change.Modified.Name"
+								   @onclick="() => conflict.SelectedValue = conflict.Change.Original" /> Basegame
+						</label>
+						<label>
+							<input type="radio" name="@conflict.Change.ModId + conflict.Change.Modified.Name"
+								   @onclick="() => conflict.SelectedValue = conflict.Change.Modified" /> Mod
+						</label>
+					</div>
+				}
+			}
+		</div>
+		<!-- Mod List-->
+		<div class="keybind-list">
+
+			<div class="keybind-header">
+				<div class="col-name">
+					<MudText Typo="Typo.h6">Detected Mods</MudText>
+				</div>
+			</div>
+
+			@if (GetMods().Count == 0)
+			{
+				<MudText Typo="Typo.h4"
+						 style="text-align: center;">
+					No Mods detected
+				</MudText>
+			}
+			<div class="keybind-body">
+				@foreach (var mod in modDiffs)
+				{
+					@if (mod.Changes.Superactions.Count == 0
+									&& mod.Changes.ActionMaps.Count == 0)
+					{
+						continue;
+					}
+					<div class="keybind-row" style="display: flex; flex-direction: column; padding: 8px;">
+						<h3>@mod.ModId</h3>
+
+						<p>
+							Superactions geändert: @mod.Changes.Superactions.Count<br />
+							ActionMaps geändert: @mod.Changes.ActionMaps.Count
+						</p>
+						<MudText>Superactions</MudText>
+						@foreach (var change in mod.Changes.Superactions)
+						{
+							<details>
+								<summary>@change.Modified.Name</summary>
+
+								<div>
+									<b>Base:</b>
+									<pre>@change.Original.Actions.Count</pre>
+
+									<b>Mod:</b>
+									<pre>@change.Modified.Actions.Count</pre>
+								</div>
+							</details>
+						}
+						<MudText>ActionMaps</MudText>
+						@foreach (var change in mod.Changes.ActionMaps)
+						{
+							<details>
+								<summary>@change.Modified.Name</summary>
+
+								<div>
+									<b>Base:</b>
+									<pre>@change.Original.Actions.Count</pre>
+
+									<b>Mod:</b>
+									<pre>@change.Modified.Actions.Count</pre>
+								</div>
+							</details>
+						}
+					</div>
+				}
+			</div>
+		</div>
 
 	</div>
 
-	<div style="height: 45%; border: solid 1px red; align-content: center;">
-		<MudToggleGroup T="KeyboardLayout"
-						@bind-value="keyboardLayout"
-						Outlined
-						Delimiters
-						Style="width: 20rem; position: absolute;"
-						Class="ml-8">
-			<MudToggleItem Value="@KeyboardLayout.QWERTY" />
-			<MudToggleItem Value="@KeyboardLayout.QWERTZ" />
-		</MudToggleGroup>
-		<Keyboard ActiveKeyChanged="OnActiveKeyChanged" Layout="keyboardLayout" />
+	<div style="height: 45%; border: solid 1px red; align-content: center; display: flex; padding: 16px;">
+		<div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+			<MudToggleGroup T="KeyboardLayout"
+							@bind-value="keyboardLayout"
+							Outlined
+							Delimiters>
+				<MudToggleItem Value="@KeyboardLayout.QWERTY" />
+				<MudToggleItem Value="@KeyboardLayout.QWERTZ" />
+			</MudToggleGroup>
+			<div>
+				<MudTextField T="string"
+							  Adornment="Adornment.End"
+							  Value="@UserSettings.Current.GamePath"
+							  AdornmentIcon="@Icons.Material.Filled.Folder"
+							  OnAdornmentClick="PickGameFolder"
+							  Label="Game Directory"
+							  Variant="Variant.Outlined"
+							  Margin="Margin.Dense" />
+			</div>
+			<div>
+				<MudTextField T="string"
+							  Adornment="Adornment.End"
+							  Value="@UserSettings.Current.GamePath"
+							  AdornmentIcon="@Icons.Material.Filled.Folder"
+							  OnAdornmentClick="PickModFolder"
+							  Label="Mod Directory"
+							  Variant="Variant.Outlined"
+							  Margin="Margin.Dense" />
+			</div>
+			<MudButton OnClick="LoadData" Variant="Variant.Filled" Color="Color.Primary">Load KeybindData</MudButton>
+		</div>
+		<div style="flex: 4;">
+			<Keyboard ActiveKeyChanged="OnActiveKeyChanged" Layout="keyboardLayout" />
+		</div>
+		<div style="flex: 1;">
+		</div>
 	</div>
 </div>
 
@@ -119,13 +284,15 @@
 	}
 
 	.col-name {
-		flex: 3;
-		text-align: center;
+		flex: 2;
+		text-align: start;
+		padding-left: 8px;
 	}
 
 	.col-a,
 	.col-b {
 		flex: 1;
 		text-align: center;
+		padding-left: 8px;
 	}
 </style>

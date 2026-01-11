@@ -10,7 +10,7 @@ namespace KCD2Keybinder.GUI.Shared.Themes
 			{
 				Primary = "#df6f00",
 				Secondary = "#f48fb1",
-				Background = "#00000000", // durchsichtig, damit CSS durchscheint
+				Background = "#00000000",
 				Surface = "#2e2e2e",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1e1e1e",
@@ -34,7 +34,7 @@ namespace KCD2Keybinder.GUI.Shared.Themes
 			{
 				Primary = "#90caf9",
 				Secondary = "#f48fb1",
-				Background = "#00000000", // durchsichtig, damit CSS durchscheint
+				Background = "#00000000",
 				Surface = "#00000000",
 				AppbarBackground = "#1a1a2e",
 				DrawerBackground = "#1a1a2e",
@@ -48,7 +48,7 @@ namespace KCD2Keybinder.GUI.Shared.Themes
 			{
 				Default = new DefaultTypography()
 				{
-					FontFamily = new[] { "Rubik" }
+					FontFamily = new[] { "KCD" }
 				}
 			}
 		};

@@ -68,6 +68,8 @@ namespace KDC2Keybinder.Core
 				return;
 			}
 
+			Mods.Clear();
+
 			foreach (var modDir in Directory.GetDirectories(modsRoot))
 			{
 				var modName = Path.GetFileName(modDir);
