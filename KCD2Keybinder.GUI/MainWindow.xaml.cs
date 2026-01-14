@@ -22,8 +22,6 @@ namespace KCD2Keybinder.GUI
 			services.AddSingleton<IUserSettingsService, UserSettingsService>();
 			services.AddSingleton<IPathProvider, UserPathProvider>();
 			services.AddSingleton<ModKeybindManager>();
-			services.AddSingleton<ModMergeState>();
-			services.AddSingleton<ModMergeService>();
 
 			var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			var logPath = Path.Combine(appData, "KCD2Keybinder", "KeybindSuperactions.log");

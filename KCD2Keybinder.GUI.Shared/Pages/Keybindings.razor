@@ -125,96 +125,12 @@
 
 		</div>
 		<div style="flex: 1; border: solid 1px blue; align-content: center;">
-			@foreach (var mod in modMergeContext?.Mods ?? [])
-			{
-				<h3>@mod.ModId</h3>
-				<button @onclick="() => ResolveMod(mod.ModId)">Konflikte lösen</button>
-			}
-			<h4>Superactions Konflikte</h4>
-
-			@foreach (var modId in resolvableChangesPerMod.Keys)
-			{
-				<h3>@modId</h3>
-				@foreach (var conflict in resolvableChangesPerMod[modId].Superactions)
-				{
-					<div>
-						<p>@conflict.Change.Modified.Name</p>
-						<label>
-							<input type="radio" name="@conflict.Change.ModId + conflict.Change.Modified.Name"
-								   @onclick="() => conflict.SelectedValue = conflict.Change.Original" /> Basegame
-						</label>
-						<label>
-							<input type="radio" name="@conflict.Change.ModId + conflict.Change.Modified.Name"
-								   @onclick="() => conflict.SelectedValue = conflict.Change.Modified" /> Mod
-						</label>
-					</div>
-				}
-			}
+			
 		</div>
 		<!-- Mod List-->
 		<div class="keybind-list">
 
-			<div class="keybind-header">
-				<div class="col-name">
-					<MudText Typo="Typo.h6">Detected Mods</MudText>
-				</div>
-			</div>
-
-			@if (GetMods().Count == 0)
-			{
-				<MudText Typo="Typo.h4"
-						 style="text-align: center;">
-					No Mods detected
-				</MudText>
-			}
-			<div class="keybind-body">
-				@foreach (var mod in modDiffs)
-				{
-					@if (mod.Changes.Superactions.Count == 0
-									&& mod.Changes.ActionMaps.Count == 0)
-					{
-						continue;
-					}
-					<div class="keybind-row" style="display: flex; flex-direction: column; padding: 8px;">
-						<h3>@mod.ModId</h3>
-
-						<p>
-							Superactions geändert: @mod.Changes.Superactions.Count<br />
-							ActionMaps geändert: @mod.Changes.ActionMaps.Count
-						</p>
-						<MudText>Superactions</MudText>
-						@foreach (var change in mod.Changes.Superactions)
-						{
-							<details>
-								<summary>@change.Modified.Name</summary>
-
-								<div>
-									<b>Base:</b>
-									<pre>@change.Original.Actions.Count</pre>
-
-									<b>Mod:</b>
-									<pre>@change.Modified.Actions.Count</pre>
-								</div>
-							</details>
-						}
-						<MudText>ActionMaps</MudText>
-						@foreach (var change in mod.Changes.ActionMaps)
-						{
-							<details>
-								<summary>@change.Modified.Name</summary>
-
-								<div>
-									<b>Base:</b>
-									<pre>@change.Original.Actions.Count</pre>
-
-									<b>Mod:</b>
-									<pre>@change.Modified.Actions.Count</pre>
-								</div>
-							</details>
-						}
-					</div>
-				}
-			</div>
+			
 		</div>
 
 	</div>
