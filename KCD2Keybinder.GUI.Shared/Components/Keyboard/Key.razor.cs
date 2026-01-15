@@ -10,6 +10,8 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 		[Parameter, EditorRequired]
 		public string Value { get; set; } = string.Empty;
 		[Parameter]
+		public bool HasConflict { get; set; }
+		[Parameter]
 		public int Size { get; set; } = 64;
 		[Parameter]
 		public KeySize KeySize { get; set; } = KeySize.Small;

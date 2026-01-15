@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Xml.Linq;
 
 namespace KDC2Keybinder.Core.Services
 {
@@ -14,7 +15,7 @@ namespace KDC2Keybinder.Core.Services
 			_entries = _archive.Entries.ToDictionary(e => e.FullName.Replace('\\', '/'), StringComparer.OrdinalIgnoreCase);
 		}
 
-		public string ReadFile(string nameOrPath)
+		public string? ReadFile(string nameOrPath)
 		{
 			var normalizedPath = nameOrPath.Replace('\\', '/');
 

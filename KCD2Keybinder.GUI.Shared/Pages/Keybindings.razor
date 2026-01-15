@@ -122,15 +122,71 @@
 					 style="text-align: center;">
 				@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)
 			</MudText>
-
+			<MudButton OnClick="ApplyModChanges">
+				Bindings Mergen
+			</MudButton>
+			<MudButton OnClick="BuildMod">
+				Create Mod
+			</MudButton>
 		</div>
 		<div style="flex: 1; border: solid 1px blue; align-content: center;">
-			
 		</div>
 		<!-- Mod List-->
 		<div class="keybind-list">
 
-			
+			<!-- HEADER -->
+			<div class="keybind-header">
+				<div class="col-name">
+					<MudText Typo="Typo.h6">Name</MudText>
+				</div>
+				<div class="col-a">
+					<MudTooltip Text="Superactions"
+						Placement="Placement.Top">
+					<MudText Typo="Typo.h6">SA</MudText>
+					</MudTooltip>
+				</div>
+				<div class="col-b">
+					<MudTooltip Text="ActionMaps"
+								Placement="Placement.Top">
+					<MudText Typo="Typo.h6">AM</MudText>
+					</MudTooltip>
+				</div>
+			</div>
+
+			<!-- SCROLLABLE LIST -->
+			<div class="keybind-body">
+				@foreach (var delta in KeybindManager.DeltaViewModels)
+				{
+					if (delta.ChangedActionMaps.Count == 0 &&
+					delta.ChangedSuperactions.Count == 0)
+					{
+						continue;
+					}
+
+
+					<div class="keybind-row">
+						<div class="col-name">
+							<MudText style="font-family: KCD;">
+								@delta.ModId
+							</MudText>
+							<MudButton OnClick="_ => MergeMod(delta)">
+								Do Stuff
+							</MudButton>
+						</div>
+						<div class="col-a">
+							<MudText style="font-family: KCD;">
+								@delta.ChangedSuperactions.Count
+							</MudText>
+						</div>
+						<div class="col-b">
+							<MudText style="font-family: KCD;">
+								@delta.ChangedActionMaps.Count
+							</MudText>
+						</div>
+					</div>
+				}
+			</div>
+
 		</div>
 
 	</div>
@@ -167,7 +223,9 @@
 			<MudButton OnClick="LoadData" Variant="Variant.Filled" Color="Color.Primary">Load KeybindData</MudButton>
 		</div>
 		<div style="flex: 4;">
-			<Keyboard ActiveKeyChanged="OnActiveKeyChanged" Layout="keyboardLayout" />
+			<Keyboard ActiveKeyChanged="OnActiveKeyChanged" 
+				Layout="keyboardLayout"
+				MergeStore="mergeStore" />
 		</div>
 		<div style="flex: 1;">
 		</div>

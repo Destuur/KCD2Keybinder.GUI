@@ -7,6 +7,7 @@ namespace KDC2Keybinder.Core.Models.Superactions
 	{
 		[XmlAttribute("name")]
 		public string Name { get; set; } = string.Empty;
+		public string Id { get; set; } = string.Empty;
 		[XmlElement("superaction")]
 		public List<Superaction> Superactions { get; set; } = new List<Superaction>();
 		[XmlElement("include")]

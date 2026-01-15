@@ -17,43 +17,25 @@ namespace KDC2Keybinder.Core.Services
 			this.pathProvider = pathProvider;
 		}
 
-		public List<ModDescription> ModCollection { get; private set; } = new();
-		public List<ModDescription> ExternalModCollection { get; private set; } = new();
-
-		public ModDescription CreateNewMod(string name, string description, string author, string version, DateTime createdOn, string modId, bool modifiesLevel, List<string> supportedGameVersions)
+		public ModDescription CreateNewMod()
 		{
-			if (string.IsNullOrWhiteSpace(name) ||
-				string.IsNullOrWhiteSpace(modId) ||
-				string.IsNullOrWhiteSpace(version))
+			return new ModDescription
 			{
-				return new ModDescription();
-			}
-
-			if (ModCollection.FirstOrDefault(x => x.Id == modId) is not null)
-			{
-				return new ModDescription();
-			}
-
-			var newMod = new ModDescription
-			{
-				Name = name,
-				Description = description,
-				Author = author,
-				ModVersion = version,
-				CreatedOn = createdOn.ToString("yyyy-MM-dd"),
-				Id = modId,
-				ModifiesLevel = modifiesLevel,
+				Name = "Keybinding Mod",
+				Description = "Best Keybinding Mod since 1403",
+				Author = "Destuur",
+				ModVersion = "1.0",
+				CreatedOn = DateTime.UtcNow.ToString("yyyy-MM-dd"),
+				Id = "zz_keybinder",
+				ModifiesLevel = false,
 			};
-
-			ModCollection.Add(newMod);
-			return newMod;
 		}
 
 		public bool WriteModManifest(ModDescription mod)
 		{
 			try
 			{
-				var modRootPath = Path.Combine(pathProvider.ModPath, "zz" + mod.Id);
+				var modRootPath = Path.Combine(pathProvider.ModPath, mod.Id);
 				var dataPath = Path.Combine(modRootPath, "Data");
 				var localizationPath = Path.Combine(modRootPath, "Localization");
 				var manifestPath = Path.Combine(modRootPath, "mod.manifest");
@@ -87,6 +69,7 @@ namespace KDC2Keybinder.Core.Services
 			}
 			catch (Exception ex)
 			{
+				logger.LogError(ex, "Error writing mod manifest for mod {ModId}", mod.Id);
 				return false;
 			}
 		}
@@ -122,7 +105,7 @@ namespace KDC2Keybinder.Core.Services
 			}
 			catch (Exception ex)
 			{
-				throw;
+				logger.LogError(ex, "Error creating mod .pak file at {PakFilePath}", pakFilePath);
 			}
 		}
 

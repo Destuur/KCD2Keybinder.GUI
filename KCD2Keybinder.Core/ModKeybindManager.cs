@@ -1,4 +1,6 @@
-﻿using KDC2Keybinder.Core.Models.DefaultProfile;
+﻿using KDC2Keybinder.Core.Models;
+using KDC2Keybinder.Core.Models.DefaultProfile;
+using KDC2Keybinder.Core.Models.DefaultProfile.ActionMaps;
 using KDC2Keybinder.Core.Models.Superactions;
 using KDC2Keybinder.Core.Services;
 using KDC2Keybinder.Core.Utils;
@@ -11,17 +13,92 @@ namespace KDC2Keybinder.Core
 	public class ModKeybindManager
 	{
 		private readonly ILogger<ModKeybindManager> logger;
+		private readonly ModService modService;
 		private readonly IPathProvider pathProvider;
+		private Profile? profile;
+		private Keybinds? keybinds;
 
-		public Profile? BaseProfile { get; private set; }
-		public Keybinds? BaseKeybinds { get; private set; }
-
+		public VanillaStore? VanillaStore { get; set; }
+		public MergedKeybindStore? MergedKeybindStore { get; set; }
 		public List<ModData> Mods { get; } = new();
+		public List<ModDeltaViewModel> DeltaViewModels { get; } = new();
 
-		public ModKeybindManager(ILogger<ModKeybindManager> logger, IPathProvider pathProvider)
+		public ModKeybindManager(ILogger<ModKeybindManager> logger, ModService modService, IPathProvider pathProvider)
 		{
 			this.logger = logger;
+			this.modService = modService;
 			this.pathProvider = pathProvider;
+		}
+
+		public void BuildMod()
+		{
+			if (MergedKeybindStore is null) return;
+
+			var modDesc = modService.CreateNewMod();
+
+			var modRoot = Path.Combine(Resources.ModsDirectory, modDesc.Id);
+			modService.WriteModManifest(modDesc);
+
+			WriteMergedModFiles(MergedKeybindStore, modRoot);
+			var pakFile = Path.Combine(modRoot, "Data", modDesc.Id + ".pak");
+			modService.CreateModPak(Path.Combine(modRoot, "Data"), pakFile);
+		}
+
+		public bool WriteMergedModFiles(MergedKeybindStore mergedStore, string modRootPath)
+		{
+			try
+			{
+				var dataPath = Path.Combine(modRootPath, "Data", "zz_keybinder", "Libs", "Config");
+				Directory.CreateDirectory(dataPath);
+
+				var keybindXml = KeybindsParser.BuildKeybindSuperactionsXml(mergedStore);
+				var keybindPath = Path.Combine(dataPath, "keybindSuperactions.xml");
+				keybindXml.Save(keybindPath);
+
+				var profileXml = ProfileParser.BuildDefaultProfileXml(mergedStore);
+				var profilePath = Path.Combine(dataPath, "defaultProfile.xml");
+				profileXml.Save(profilePath);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Failed to write merged mod files to {ModRootPath}", modRootPath);
+				return false;
+			}
+		}
+
+
+		public void ApplyAllToMergedStore(MergeStore mergeStore)
+		{
+			if (MergedKeybindStore is null)
+			{
+				logger.LogError("MergedKeybindStore is not initialized.");
+				throw new InvalidOperationException("MergedKeybindStore is not initialized.");
+			}
+			foreach (var kvp in mergeStore.Changes)
+			{
+				var entries = kvp.Value;
+
+				var selected = entries.First();
+
+				switch (selected.Delta)
+				{
+					case Superaction sa:
+						MergedKeybindStore.ApplyModDelta(new ModDelta
+						{
+							Superactions = { [sa.Name] = sa }
+						});
+						break;
+
+					case ActionMap am:
+						MergedKeybindStore.ApplyModDelta(new ModDelta
+						{
+							ActionMaps = { [am.Name] = am }
+						});
+						break;
+				}
+			}
 		}
 
 		#region --- Load Base Game ---
@@ -37,22 +114,36 @@ namespace KDC2Keybinder.Core
 
 			using var reader = new PakReader(pakPath);
 
-			// --- Profile ---
 			var profileXml = reader.ReadFile(Resources.DefaultProfileXML);
 			if (!string.IsNullOrEmpty(profileXml))
 			{
 				var serializer = new XmlSerializer(typeof(Profile));
 				using var sr = new StringReader(profileXml);
-				BaseProfile = (Profile)serializer.Deserialize(sr)!;
+				profile = (Profile)serializer.Deserialize(sr)!;
 			}
 
-			// --- Keybinds ---
 			var keybindXml = reader.ReadFile(Resources.KeybindSuperactions);
 			if (!string.IsNullOrEmpty(keybindXml))
 			{
-				var doc = XDocument.Parse(keybindXml);
-				BaseKeybinds = KeybindsParser.Parse(doc);
+				var doc = XDocument.Parse(keybindXml, LoadOptions.SetLineInfo | LoadOptions.PreserveWhitespace);
+				keybinds = KeybindsParser.Parse(doc);
 			}
+
+			if (profile == null || keybinds == null)
+			{
+				logger.LogError("Failed to load base game data from {PakPath}", pakPath);
+				throw new InvalidOperationException("Failed to load base game data.");
+			}
+
+			VanillaStore = new VanillaStore
+			{
+				Profile = profile,
+				Keybinds = keybinds,
+				SuperactionsByName = keybinds.Superactions.ToDictionary(sa => sa.Name),
+				ActionMapsByName = profile.ActionMaps.ToDictionary(am => am.Name)
+			};
+
+			MergedKeybindStore = new MergedKeybindStore(keybinds, profile);
 			logger.LogInformation("Base game data loaded successfully from {PakPath}", pakPath);
 		}
 
@@ -91,11 +182,10 @@ namespace KDC2Keybinder.Core
 
 				var modData = new ModData
 				{
-					ModId = modId,
-					ModPath = modDir
+					Id = modId,
+					Path = modDir
 				};
 
-				// --- Keybinds ---
 				var keybindXml = pakReader.ReadFile(Resources.KeybindSuperactions);
 				if (!string.IsNullOrEmpty(keybindXml))
 				{
@@ -103,7 +193,6 @@ namespace KDC2Keybinder.Core
 					modData.Keybinds = KeybindsParser.Parse(doc);
 				}
 
-				// --- Profile ---
 				var profileXml = pakReader.ReadFile(Resources.DefaultProfileXML);
 				if (!string.IsNullOrEmpty(profileXml))
 				{
@@ -112,10 +201,52 @@ namespace KDC2Keybinder.Core
 					modData.Profile = (Profile)serializer.Deserialize(sr)!;
 				}
 
+				if (VanillaStore != null)
+				{
+					modData.Delta = ExtractModDelta(modData, VanillaStore, logger);
+				}
+
 				logger.LogInformation("Loaded mod: {ModId} from {ModPath}", modId, modDir);
 				Mods.Add(modData);
 			}
+
+			BuildDeltaViewModels();
 		}
+
+		public static ModDelta ExtractModDelta(ModData mod, VanillaStore vanilla, ILogger logger)
+		{
+			var delta = new ModDelta { ModId = mod.Id };
+
+			if (mod.Keybinds?.Superactions is not null)
+			{
+				foreach (var sa in mod.Keybinds.Superactions)
+				{
+					if (!vanilla.SuperactionsByName.TryGetValue(sa.Name, out var baseSa) || !SuperactionEquals(baseSa, sa))
+					{
+						delta.Superactions[sa.Name] = sa;
+
+						logger.LogDebug("Mod {ModId}: Superaction changed or new: {Name}", mod.Id, sa.Name);
+					}
+				}
+			}
+
+			if (mod.Profile?.ActionMaps is not null)
+			{
+				foreach (var map in mod.Profile.ActionMaps)
+				{
+					if (!vanilla.ActionMapsByName.TryGetValue(map.Name, out var baseMap) || !ActionMapEquals(baseMap, map))
+					{
+						delta.ActionMaps[map.Name] = map;
+
+						logger.LogDebug("Mod {ModId}: ActionMap changed or new: {Name}", mod.Id, map.Name);
+					}
+				}
+			}
+
+			return delta;
+		}
+
+
 
 		private string GetModIdFromManifest(string manifestPath)
 		{
@@ -123,6 +254,92 @@ namespace KDC2Keybinder.Core
 			return doc.Root?.Element("info")?.Element("modid")?.Value ?? Path.GetFileNameWithoutExtension(manifestPath);
 		}
 
+		#endregion
+
+		#region --- Helper Functions ---
+
+		public void BuildDeltaViewModels()
+		{
+			DeltaViewModels.Clear();
+			if (VanillaStore == null) return;
+
+			foreach (var mod in Mods)
+			{
+				var delta = ExtractModDelta(mod, VanillaStore, logger);
+				DeltaViewModels.Add(new ModDeltaViewModel
+				{
+					ModId = delta.ModId,
+					ChangedSuperactions = delta.Superactions.Values.ToList(),
+					ChangedActionMaps = delta.ActionMaps.Values.ToList()
+				});
+			}
+		}
+
+		private static bool SuperactionEquals(Superaction a, Superaction b)
+		{
+			if (a.Name != b.Name) return false;
+
+			if (a.Actions.Count != b.Actions.Count) return false;
+
+			var aActions = a.Actions.OrderBy(x => x.Name).ThenBy(x => x.Map).ToList();
+
+			var bActions = b.Actions.OrderBy(x => x.Name).ThenBy(x => x.Map).ToList();
+
+			for (int i = 0; i < aActions.Count; i++)
+			{
+				if (aActions[i].Name != bActions[i].Name) return false;
+				if (aActions[i].Map != bActions[i].Map) return false;
+			}
+
+			return true;
+		}
+
+		private static bool ActionMapEquals(ActionMap a, ActionMap b)
+		{
+			if (a.Name != b.Name) return false;
+
+			if (a.Priority != b.Priority) return false;
+
+			if (a.Exclusivity != b.Exclusivity) return false;
+
+			if (!UnorderedEqual(a.Includes.Select(i => i.ActionMap), b.Includes.Select(i => i.ActionMap))) return false;
+
+			if (a.Actions.Count != b.Actions.Count) return false;
+
+			var aActions = a.Actions.OrderBy(x => x.Name).ToList();
+
+			var bActions = b.Actions.OrderBy(x => x.Name).ToList();
+
+			for (int i = 0; i < aActions.Count; i++)
+			{
+				if (!ActionElementEquals(aActions[i], bActions[i])) return false;
+			}
+
+			return true;
+		}
+
+		private static bool ActionElementEquals(ActionElement a, ActionElement b)
+		{
+			if (a.Name != b.Name) return false;
+
+			return a.OnPress == b.OnPress
+				&& a.OnRelease == b.OnRelease
+				&& a.OnHold == b.OnHold
+				&& a.NoModifiers == b.NoModifiers
+				&& a.Retriggerable == b.Retriggerable
+				&& a.HoldTriggerDelay == b.HoldTriggerDelay
+				&& a.HoldRepeatDelay == b.HoldRepeatDelay
+				&& a.Keyboard == b.Keyboard
+				&& a.Xboxpad == b.Xboxpad
+				&& a.Pspad == b.Pspad;
+		}
+
+		private static bool UnorderedEqual<T>(IEnumerable<T> a, IEnumerable<T> b)
+		{
+			var setA = a.ToHashSet();
+			var setB = b.ToHashSet();
+			return setA.SetEquals(setB);
+		}
 		#endregion
 	}
 }

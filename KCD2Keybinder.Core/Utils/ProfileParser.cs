@@ -1,4 +1,5 @@
-﻿using KDC2Keybinder.Core.Models.DefaultProfile;
+﻿using KDC2Keybinder.Core.Models;
+using KDC2Keybinder.Core.Models.DefaultProfile;
 using KDC2Keybinder.Core.Models.DefaultProfile.ActionMaps;
 using KDC2Keybinder.Core.Models.DefaultProfile.Controller;
 using KDC2Keybinder.Core.Models.DefaultProfile.Filter;
@@ -212,5 +213,131 @@ namespace KDC2Keybinder.Core.Utils
 				})
 				.ToList();
 		}
+
+
+		public static XDocument BuildDefaultProfileXml(MergedKeybindStore mergedStore)
+		{
+			var profile = mergedStore.VanillaProfile;
+			var root = new XElement("profile", new XAttribute("version", "0"));
+
+			if (profile.Priorities != null)
+			{
+				var prioritiesEl = new XElement("priorities");
+				foreach (var p in profile.Priorities.PriorityList)
+				{
+					prioritiesEl.Add(new XElement("priority",
+						new XAttribute("name", p.Name),
+						new XAttribute("value", p.Value)
+					));
+				}
+				root.Add(prioritiesEl);
+			}
+
+			if (profile.Platforms != null)
+			{
+				var platformsEl = new XElement("platforms");
+				foreach (var pf in profile.Platforms.PlatformList)
+				{
+					string nodeName = pf switch
+					{
+						PC => "PC",
+						Xbox => "XboxOne",
+						PS4 => "PS4",
+						_ => "Unknown"
+					};
+
+					platformsEl.Add(new XElement(nodeName,
+						new XAttribute("keyboard", pf.Keyboard),
+						new XAttribute("xboxpad", pf.Xboxpad),
+						new XAttribute("pspad", pf.Pspad)
+					));
+				}
+				root.Add(platformsEl);
+			}
+
+			foreach (var am in mergedStore.ActionMaps)
+			{
+				var mapEl = new XElement("actionmap",
+					new XAttribute("name", am.Name),
+					new XAttribute("priority", am.Priority),
+					new XAttribute("exclusivity", am.Exclusivity)
+				);
+
+				foreach (var a in am.Actions)
+				{
+					var actionEl = new XElement("action",
+						new XAttribute("name", a.Name)
+					);
+
+					if (!string.IsNullOrEmpty(a.OnPress)) actionEl.SetAttributeValue("onPress", a.OnPress);
+					if (!string.IsNullOrEmpty(a.OnRelease)) actionEl.SetAttributeValue("onRelease", a.OnRelease);
+					if (!string.IsNullOrEmpty(a.OnHold)) actionEl.SetAttributeValue("onHold", a.OnHold);
+					if (!string.IsNullOrEmpty(a.Retriggerable)) actionEl.SetAttributeValue("retriggerable", a.Retriggerable);
+					if (!string.IsNullOrEmpty(a.NoModifiers)) actionEl.SetAttributeValue("noModifiers", a.NoModifiers);
+					if (!string.IsNullOrEmpty(a.HoldTriggerDelay)) actionEl.SetAttributeValue("holdTriggerDelay", a.HoldTriggerDelay);
+					if (!string.IsNullOrEmpty(a.HoldRepeatDelay)) actionEl.SetAttributeValue("holdRepeatDelay", a.HoldRepeatDelay);
+					if (!string.IsNullOrEmpty(a.Keyboard)) actionEl.SetAttributeValue("keyboard", a.Keyboard);
+					if (!string.IsNullOrEmpty(a.Xboxpad)) actionEl.SetAttributeValue("xboxpad", a.Xboxpad);
+					if (!string.IsNullOrEmpty(a.Pspad)) actionEl.SetAttributeValue("pspad", a.Pspad);
+
+					if (a.XBoxPad?.InputData != null && a.XBoxPad.InputData.Any())
+					{
+						var xboxEl = new XElement("xboxpad");
+						foreach (var input in a.XBoxPad.InputData)
+						{
+							var inputEl = new XElement("inputdata", new XAttribute("input", input.Input));
+							if (!string.IsNullOrEmpty(input.UseAnalogCompare)) inputEl.SetAttributeValue("useAnalogCompare", input.UseAnalogCompare);
+							if (!string.IsNullOrEmpty(input.AnalogCompareVal)) inputEl.SetAttributeValue("analogCompareVal", input.AnalogCompareVal);
+							if (!string.IsNullOrEmpty(input.AnalogCompareOp)) inputEl.SetAttributeValue("analogCompareOp", input.AnalogCompareOp);
+							xboxEl.Add(inputEl);
+						}
+						actionEl.Add(xboxEl);
+					}
+
+					if (a.PspPad?.InputData != null && a.PspPad.InputData.Any())
+					{
+						var pspEl = new XElement("pspad");
+						foreach (var input in a.PspPad.InputData)
+						{
+							var inputEl = new XElement("inputdata", new XAttribute("input", input.Input));
+							if (!string.IsNullOrEmpty(input.UseAnalogCompare)) inputEl.SetAttributeValue("useAnalogCompare", input.UseAnalogCompare);
+							if (!string.IsNullOrEmpty(input.AnalogCompareVal)) inputEl.SetAttributeValue("analogCompareVal", input.AnalogCompareVal);
+							if (!string.IsNullOrEmpty(input.AnalogCompareOp)) inputEl.SetAttributeValue("analogCompareOp", input.AnalogCompareOp);
+							pspEl.Add(inputEl);
+						}
+						actionEl.Add(pspEl);
+					}
+
+					mapEl.Add(actionEl);
+				}
+
+				foreach (var inc in am.Includes)
+					mapEl.Add(new XElement("include", new XAttribute("actionmap", inc.ActionMap)));
+
+				root.Add(mapEl);
+			}
+
+			foreach (var af in profile.ActionFilter)
+			{
+				var filterEl = new XElement("actionfilter", new XAttribute("name", af.Name));
+				foreach (var a in af.Actions)
+					filterEl.Add(new XElement("action", new XAttribute("name", a.Name)));
+				root.Add(filterEl);
+			}
+
+			if (profile.Controllerlayouts != null)
+			{
+				var layoutsEl = new XElement("controllerlayouts");
+				foreach (var l in profile.Controllerlayouts.Layout)
+					layoutsEl.Add(new XElement("layout",
+						new XAttribute("name", l.Name),
+						new XAttribute("file", l.File)
+					));
+				root.Add(layoutsEl);
+			}
+
+			return new XDocument(new XDeclaration("1.0", "utf-8", "yes"), root);
+		}
+
 	}
 }

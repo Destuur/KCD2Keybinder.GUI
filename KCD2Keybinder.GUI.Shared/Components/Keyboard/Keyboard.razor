@@ -1,156 +1,156 @@
 ﻿<div class="keyboard">
 	<!-- F-Keys -->
 	<div class="keyboard-row" style="padding-bottom: 16px;">
-		<Key Label="esc" Value="escape" IsActivated="@(activeKey == "escape")" KeyPressed="OnKeyPressed" />
+		<Key Label="esc" Value="escape" IsActivated="@(activeKey == "escape")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("escape")" />
 		<div>
-			<Key Label="F1" Value="F1" IsActivated="@(activeKey == "F1")" KeyPressed="OnKeyPressed" />
-			<Key Label="F2" Value="F2" IsActivated="@(activeKey == "F2")" KeyPressed="OnKeyPressed" />
-			<Key Label="F3" Value="F3" IsActivated="@(activeKey == "F3")" KeyPressed="OnKeyPressed" />
-			<Key Label="F4" Value="F4" IsActivated="@(activeKey == "F4")" KeyPressed="OnKeyPressed" />
+			<Key Label="F1" Value="F1" IsActivated="@(activeKey == "F1")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F1")" />
+			<Key Label="F2" Value="F2" IsActivated="@(activeKey == "F2")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F2")" />
+			<Key Label="F3" Value="F3" IsActivated="@(activeKey == "F3")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F3")" />
+			<Key Label="F4" Value="F4" IsActivated="@(activeKey == "F4")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F4")" />
 		</div>
 		<div>
-			<Key Label="F5" Value="F5" IsActivated="@(activeKey == "F5")" KeyPressed="OnKeyPressed" />
-			<Key Label="F6" Value="F6" IsActivated="@(activeKey == "F6")" KeyPressed="OnKeyPressed" />
-			<Key Label="F7" Value="F7" IsActivated="@(activeKey == "F7")" KeyPressed="OnKeyPressed" />
-			<Key Label="F8" Value="F8" IsActivated="@(activeKey == "F8")" KeyPressed="OnKeyPressed" />
+			<Key Label="F5" Value="F5" IsActivated="@(activeKey == "F5")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F5")" />
+			<Key Label="F6" Value="F6" IsActivated="@(activeKey == "F6")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F6")" />
+			<Key Label="F7" Value="F7" IsActivated="@(activeKey == "F7")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F7")" />
+			<Key Label="F8" Value="F8" IsActivated="@(activeKey == "F8")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F8")" />
 		</div>
 		<div>
-			<Key Label="F9" Value="F9" IsActivated="@(activeKey == "F9")" KeyPressed="OnKeyPressed" />
-			<Key Label="F10" Value="F10" IsActivated="@(activeKey == "F10")" KeyPressed="OnKeyPressed" />
-			<Key Label="F11" Value="F11" IsActivated="@(activeKey == "F11")" KeyPressed="OnKeyPressed" />
-			<Key Label="F12" Value="F12" IsActivated="@(activeKey == "F12")" KeyPressed="OnKeyPressed" />
+			<Key Label="F9" Value="F9" IsActivated="@(activeKey == "F9")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F9")" />
+			<Key Label="F10" Value="F10" IsActivated="@(activeKey == "F10")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F10")" />
+			<Key Label="F11" Value="F11" IsActivated="@(activeKey == "F11")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F11")" />
+			<Key Label="F12" Value="F12" IsActivated="@(activeKey == "F12")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F12")" />
 		</div>
 	</div>
 	<!-- Numbers Row -->
 	<div class="keyboard-row">
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			<Key Label="`" Value="`" IsActivated="@(activeKey == "`")" KeyPressed="OnKeyPressed" />
+			<Key Label="`" Value="`" IsActivated="@(activeKey == "`")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("`")" />
 		}
 		else
 		{
-			<Key Label="^" Value="^" IsActivated="@(activeKey == "^")" KeyPressed="OnKeyPressed" />
+			<Key Label="^" Value="^" IsActivated="@(activeKey == "^")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("^")" />
 		}
 		<div>
-			<Key Label="1" Value="1" IsActivated="@(activeKey == "1")" KeyPressed="OnKeyPressed" />
-			<Key Label="2" Value="2" IsActivated="@(activeKey == "2")" KeyPressed="OnKeyPressed" />
-			<Key Label="3" Value="3" IsActivated="@(activeKey == "3")" KeyPressed="OnKeyPressed" />
-			<Key Label="4" Value="4" IsActivated="@(activeKey == "4")" KeyPressed="OnKeyPressed" />
-			<Key Label="5" Value="5" IsActivated="@(activeKey == "5")" KeyPressed="OnKeyPressed" />
-			<Key Label="6" Value="6" IsActivated="@(activeKey == "6")" KeyPressed="OnKeyPressed" />
-			<Key Label="7" Value="7" IsActivated="@(activeKey == "7")" KeyPressed="OnKeyPressed" />
-			<Key Label="8" Value="8" IsActivated="@(activeKey == "8")" KeyPressed="OnKeyPressed" />
-			<Key Label="9" Value="9" IsActivated="@(activeKey == "9")" KeyPressed="OnKeyPressed" />
-			<Key Label="0" Value="0" IsActivated="@(activeKey == "0")" KeyPressed="OnKeyPressed" />
+			<Key Label="1" Value="1" IsActivated="@(activeKey == "1")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("1")" />
+			<Key Label="2" Value="2" IsActivated="@(activeKey == "2")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("2")" />
+			<Key Label="3" Value="3" IsActivated="@(activeKey == "3")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("3")" />
+			<Key Label="4" Value="4" IsActivated="@(activeKey == "4")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("4")" />
+			<Key Label="5" Value="5" IsActivated="@(activeKey == "5")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("5")" />
+			<Key Label="6" Value="6" IsActivated="@(activeKey == "6")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("6")" />
+			<Key Label="7" Value="7" IsActivated="@(activeKey == "7")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("7")" />
+			<Key Label="8" Value="8" IsActivated="@(activeKey == "8")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("8")" />
+			<Key Label="9" Value="9" IsActivated="@(activeKey == "9")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("9")" />
+			<Key Label="0" Value="0" IsActivated="@(activeKey == "0")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("0")" />
 			@if (Layout == KeyboardLayout.QWERTY)
 			{
-				<Key Label="-" Value="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
-				<Key Label="=" Value="=" IsActivated="@(activeKey == "=")" KeyPressed="OnKeyPressed" />
+				<Key Label="-" Value="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("-")" />
+				<Key Label="=" Value="=" IsActivated="@(activeKey == "=")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("=")" />
 			}
 			else
 			{
-				<Key Label="ß" Value="ß" IsActivated="@(activeKey == "ß")" KeyPressed="OnKeyPressed" />
-				<Key Label="´" Value="´" IsActivated="@(activeKey == "´")" KeyPressed="OnKeyPressed" />
+				<Key Label="ß" Value="ß" IsActivated="@(activeKey == "ß")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("ß")" />
+				<Key Label="´" Value="´" IsActivated="@(activeKey == "´")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("´")" />
 			}
 		</div>
-		<Key KeySize="Models.KeySize.Large" Label="backspace" Value="backspace" IsActivated="@(activeKey == "backspace")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="backspace" Value="backspace" IsActivated="@(activeKey == "backspace")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("backspace")" />
 	</div>
 	<!-- First Letters Row -->
 	<div class="keyboard-row">
-		<Key Label="tab" Value="tab" KeySize="KeySize.Medium" IsActivated="@(activeKey == "tab")" KeyPressed="OnKeyPressed" />
+		<Key Label="tab" Value="tab" KeySize="KeySize.Medium" IsActivated="@(activeKey == "tab")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("tab")" />
 		<div>
-			<Key Label="Q" Value="Q" IsActivated="@(activeKey == "Q")" KeyPressed="OnKeyPressed" />
-			<Key Label="W" Value="W" IsActivated="@(activeKey == "W")" KeyPressed="OnKeyPressed" />
-			<Key Label="E" Value="E" IsActivated="@(activeKey == "E")" KeyPressed="OnKeyPressed" />
-			<Key Label="R" Value="R" IsActivated="@(activeKey == "R")" KeyPressed="OnKeyPressed" />
-			<Key Label="T" Value="T" IsActivated="@(activeKey == "T")" KeyPressed="OnKeyPressed" />
-			<Key Label="Y" Value="Y" IsActivated="@(activeKey == "Y")" KeyPressed="OnKeyPressed" />
-			<Key Label="U" Value="U" IsActivated="@(activeKey == "U")" KeyPressed="OnKeyPressed" />
-			<Key Label="I" Value="I" IsActivated="@(activeKey == "I")" KeyPressed="OnKeyPressed" />
-			<Key Label="O" Value="O" IsActivated="@(activeKey == "O")" KeyPressed="OnKeyPressed" />
-			<Key Label="P" Value="P" IsActivated="@(activeKey == "P")" KeyPressed="OnKeyPressed" />
+			<Key Label="Q" Value="Q" IsActivated="@(activeKey == "Q")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("Q")" />
+			<Key Label="W" Value="W" IsActivated="@(activeKey == "W")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("W")" />
+			<Key Label="E" Value="E" IsActivated="@(activeKey == "E")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("E")" />
+			<Key Label="R" Value="R" IsActivated="@(activeKey == "R")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("R")" />
+			<Key Label="T" Value="T" IsActivated="@(activeKey == "T")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("T")" />
+			<Key Label="Y" Value="Y" IsActivated="@(activeKey == "Y")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("Y")" />
+			<Key Label="U" Value="U" IsActivated="@(activeKey == "U")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("U")" />
+			<Key Label="I" Value="I" IsActivated="@(activeKey == "I")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("I")" />
+			<Key Label="O" Value="O" IsActivated="@(activeKey == "O")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("O")" />
+			<Key Label="P" Value="P" IsActivated="@(activeKey == "P")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("P")" />
 			@if (Layout == KeyboardLayout.QWERTY)
 			{
-				<Key Label="[" Value="[" IsActivated="@(activeKey == "[")" KeyPressed="OnKeyPressed" />
-				<Key Label="]" Value="]" IsActivated="@(activeKey == "]")" KeyPressed="OnKeyPressed" />
+				<Key Label="[" Value="[" IsActivated="@(activeKey == "[")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("[")" />
+				<Key Label="]" Value="]" IsActivated="@(activeKey == "]")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("]")" />
 			}
 			else
 			{
-				<Key Label="ü" Value="ü" IsActivated="@(activeKey == "ü")" KeyPressed="OnKeyPressed" />
-				<Key Label="+" Value="+" IsActivated="@(activeKey == "+")" KeyPressed="OnKeyPressed" />
+				<Key Label="ü" Value="ü" IsActivated="@(activeKey == "ü")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("ü")" />
+				<Key Label="+" Value="+" IsActivated="@(activeKey == "+")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("+")" />
 			}
 		</div>
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			<Key Label="\" Value="\" KeySize="KeySize.Medium" IsActivated="@(activeKey == "\\")" KeyPressed="OnKeyPressed" />
+			<Key Label="\" Value="\" KeySize="KeySize.Medium" IsActivated="@(activeKey == "\\")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("\\")" />
 		}
 		else
 		{
-			<Key Label="#" Value="#" KeySize="KeySize.Medium" IsActivated="@(activeKey == "#")" KeyPressed="OnKeyPressed" />
+			<Key Label="#" Value="#" KeySize="KeySize.Medium" IsActivated="@(activeKey == "#")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("#")" />
 		}
 	</div>
 	<!-- Second Letters Row -->
 	<div class="keyboard-row">
-		<Key KeySize="Models.KeySize.Large" Label="caps" Value="capslock" IsActivated="@(activeKey == "capslock")" KeyPressed="OnKeyPressed" />
-		<Key Label="A" Value="A" IsActivated="@(activeKey == "A")" KeyPressed="OnKeyPressed" />
-		<Key Label="S" Value="S" IsActivated="@(activeKey == "S")" KeyPressed="OnKeyPressed" />
-		<Key Label="D" Value="D" IsActivated="@(activeKey == "D")" KeyPressed="OnKeyPressed" />
-		<Key Label="F" Value="F" IsActivated="@(activeKey == "F")" KeyPressed="OnKeyPressed" />
-		<Key Label="G" Value="G" IsActivated="@(activeKey == "G")" KeyPressed="OnKeyPressed" />
-		<Key Label="H" Value="H" IsActivated="@(activeKey == "H")" KeyPressed="OnKeyPressed" />
-		<Key Label="J" Value="J" IsActivated="@(activeKey == "J")" KeyPressed="OnKeyPressed" />
-		<Key Label="K" Value="K" IsActivated="@(activeKey == "K")" KeyPressed="OnKeyPressed" />
-		<Key Label="L" Value="L" IsActivated="@(activeKey == "L")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="caps" Value="capslock" IsActivated="@(activeKey == "capslock")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("capslock")" />
+		<Key Label="A" Value="A" IsActivated="@(activeKey == "A")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("A")" />
+		<Key Label="S" Value="S" IsActivated="@(activeKey == "S")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("S")" />
+		<Key Label="D" Value="D" IsActivated="@(activeKey == "D")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("D")" />
+		<Key Label="F" Value="F" IsActivated="@(activeKey == "F")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("F")" />
+		<Key Label="G" Value="G" IsActivated="@(activeKey == "G")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("G")" />
+		<Key Label="H" Value="H" IsActivated="@(activeKey == "H")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("H")" />
+		<Key Label="J" Value="J" IsActivated="@(activeKey == "J")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("J")" />
+		<Key Label="K" Value="K" IsActivated="@(activeKey == "K")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("K")" />
+		<Key Label="L" Value="L" IsActivated="@(activeKey == "L")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("L")" />
 		@if (Layout == KeyboardLayout.QWERTY)
 		{
-			<Key Label=";" Value=";" IsActivated="@(activeKey == ";")" KeyPressed="OnKeyPressed" />
-			<Key Label="'" Value="'" IsActivated="@(activeKey == "'")" KeyPressed="OnKeyPressed" />
+			<Key Label=";" Value=";" IsActivated="@(activeKey == ";")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict(";")" />
+			<Key Label="'" Value="'" IsActivated="@(activeKey == "'")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("'")" />
 		}
 		else
 		{
-			<Key Label="ö" Value="ö" IsActivated="@(activeKey == "ö")" KeyPressed="OnKeyPressed" />
-			<Key Label="ä" Value="ä" IsActivated="@(activeKey == "ä")" KeyPressed="OnKeyPressed" />
+			<Key Label="ö" Value="ö" IsActivated="@(activeKey == "ö")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("ö")" />
+			<Key Label="ä" Value="ä" IsActivated="@(activeKey == "ä")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("ä")" />
 		}
-		<Key KeySize="Models.KeySize.Large" Label="enter" Value="enter" IsActivated="@(activeKey == "enter")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="enter" Value="enter" IsActivated="@(activeKey == "enter")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("enter")" />
 	</div>
 	<!-- Third Letters Row -->
 	<div class="keyboard-row">
-		<Key KeySize="Models.KeySize.Large" Label="shift" Value="lshift" IsActivated="@(activeKey == "lshift")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="shift" Value="lshift" IsActivated="@(activeKey == "lshift")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("lshift")" />
 		<div>
-			<Key Label="Z" Value="Z" IsActivated="@(activeKey == "Z")" KeyPressed="OnKeyPressed" />
-			<Key Label="X" Value="X" IsActivated="@(activeKey == "X")" KeyPressed="OnKeyPressed" />
-			<Key Label="C" Value="C" IsActivated="@(activeKey == "C")" KeyPressed="OnKeyPressed" />
-			<Key Label="V" Value="V" IsActivated="@(activeKey == "V")" KeyPressed="OnKeyPressed" />
-			<Key Label="B" Value="B" IsActivated="@(activeKey == "B")" KeyPressed="OnKeyPressed" />
-			<Key Label="N" Value="N" IsActivated="@(activeKey == "N")" KeyPressed="OnKeyPressed" />
-			<Key Label="M" Value="M" IsActivated="@(activeKey == "M")" KeyPressed="OnKeyPressed" />
+			<Key Label="Z" Value="Z" IsActivated="@(activeKey == "Z")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("Z")" />
+			<Key Label="X" Value="X" IsActivated="@(activeKey == "X")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("X")" />
+			<Key Label="C" Value="C" IsActivated="@(activeKey == "C")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("C")" />
+			<Key Label="V" Value="V" IsActivated="@(activeKey == "V")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("V")" />
+			<Key Label="B" Value="B" IsActivated="@(activeKey == "B")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("B")" />
+			<Key Label="N" Value="N" IsActivated="@(activeKey == "N")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("N")" />
+			<Key Label="M" Value="M" IsActivated="@(activeKey == "M")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("M")" />
 			@if (Layout == KeyboardLayout.QWERTY)
 			{
-				<Key Label="," Value="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" />
-				<Key Label="." Value="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" />
-				<Key Label="/" Value="/" IsActivated="@(activeKey == "/")" KeyPressed="OnKeyPressed" />
+				<Key Label="," Value="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict(",")" />
+				<Key Label="." Value="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict(".")" />
+				<Key Label="/" Value="/" IsActivated="@(activeKey == "/")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("/")" />
 			}
 			else
 			{
-				<Key Label="," Value="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" />
-				<Key Label="." Value="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" />
-				<Key Label="-" Value="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" />
+				<Key Label="," Value="," IsActivated="@(activeKey == ",")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict(",")" />
+				<Key Label="." Value="." IsActivated="@(activeKey == ".")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict(".")" />
+				<Key Label="-" Value="-" IsActivated="@(activeKey == "-")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("-")" />
 			}
 		</div>
-		<Key KeySize="Models.KeySize.Large" Label="shift" Value="rshift" IsActivated="@(activeKey == "rshift")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Large" Label="shift" Value="rshift" IsActivated="@(activeKey == "rshift")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("rshift")" />
 	</div>
 	<!-- Control Keys Row -->
 	<div class="keyboard-row">
 		<div>
-			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="lctrl" IsActivated="@(activeKey == "lctrl")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="⊞ / ⌘" Value="⊞ / ⌘" IsActivated="@(activeKey == "⊞ / ⌘")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="alt" Value="lalt" IsActivated="@(activeKey == "lalt")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="lctrl" IsActivated="@(activeKey == "lctrl")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("lctrl")" />
+			<Key KeySize="Models.KeySize.Medium" Label="⊞ / ⌘" Value="⊞ / ⌘" IsActivated="@(activeKey == "⊞ / ⌘")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("⊞ / ⌘")" />
+			<Key KeySize="Models.KeySize.Medium" Label="alt" Value="lalt" IsActivated="@(activeKey == "lalt")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("lalt")" />
 		</div>
-		<Key KeySize="Models.KeySize.Space" Label="space" Value="space" IsActivated="@(activeKey == "space")" KeyPressed="OnKeyPressed" />
+		<Key KeySize="Models.KeySize.Space" Label="space" Value="space" IsActivated="@(activeKey == "space")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("space")" />
 		<div>
-			<Key KeySize="Models.KeySize.Medium" Label="altgr" Value="altgr" IsActivated="@(activeKey == "altgr")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="fn" Value="fn" IsActivated="@(activeKey == "fn")" KeyPressed="OnKeyPressed" />
-			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="rctrl" IsActivated="@(activeKey == "rctrl")" KeyPressed="OnKeyPressed" />
+			<Key KeySize="Models.KeySize.Medium" Label="altgr" Value="altgr" IsActivated="@(activeKey == "altgr")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("altgr")" />
+			<Key KeySize="Models.KeySize.Medium" Label="fn" Value="fn" IsActivated="@(activeKey == "fn")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("fn")" />
+			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="rctrl" IsActivated="@(activeKey == "rctrl")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("rctrl")" />
 		</div>
 	</div>
 </div>

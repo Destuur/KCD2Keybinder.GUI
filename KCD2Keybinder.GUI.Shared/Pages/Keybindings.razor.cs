@@ -1,6 +1,6 @@
 using KCD2Keybinder.GUI.Shared.Models;
 using KDC2Keybinder.Core;
-using KDC2Keybinder.Core.Models.DefaultProfile.ActionMaps;
+using KDC2Keybinder.Core.Models;
 using KDC2Keybinder.Core.Models.Superactions;
 using KDC2Keybinder.Core.Services;
 using KDC2Keybinder.Core.Utils;
@@ -13,6 +13,7 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 		private string? activeKey;
 		private Superaction? selectedSuperaction;
 		private KeyboardLayout keyboardLayout = KeyboardLayout.QWERTY;
+		private MergeStore mergeStore = new();
 
 		[Inject]
 		public IFolderPickerService FolderPicker { get; set; } = null!;
@@ -32,6 +33,29 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 			UserSettings.Update(s => s.GamePath = path);
 		}
 
+		public void ApplyModChanges()
+		{
+			KeybindManager.ApplyAllToMergedStore(mergeStore);
+		}
+
+		public void BuildMod()
+		{
+			KeybindManager.BuildMod();
+		}
+
+		public void MergeMod(ModDeltaViewModel delta)
+		{
+			foreach (var sa in delta.ChangedSuperactions)
+			{
+				mergeStore.AddSuperaction(sa.Name, delta.ModId, sa);
+			}
+
+			foreach (var am in delta.ChangedActionMaps)
+			{
+				mergeStore.AddActionMap(am.Name, delta.ModId, am);
+			}
+		}
+
 		private async Task PickModFolder()
 		{
 			var path = await FolderPicker.PickFolderAsync();
@@ -45,17 +69,18 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 
 		private List<Superaction> GetKeybindSuperactions()
 		{
-			if (activeKey is null)
+			if (activeKey is null ||
+				KeybindManager.MergedKeybindStore is null)
 			{
 				return [];
 			}
 
-			if (KeybindManager.BaseKeybinds is null)
+			if (KeybindManager.MergedKeybindStore.Superactions is null)
 			{
 				return [];
 			}
 
-			var superactions = KeybindManager.BaseKeybinds.Superactions;
+			var superactions = KeybindManager.MergedKeybindStore.Superactions;
 
 			if (superactions is null)
 			{
