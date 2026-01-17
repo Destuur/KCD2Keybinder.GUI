@@ -46,21 +46,22 @@ namespace KCD2Keybinder.GUI
 		#region WPF Window Methods
 		private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			if (e.ChangedButton == MouseButton.Left)
+			if (e.ChangedButton != MouseButton.Left)
+				return;
+
+			if (WindowState == WindowState.Maximized)
 			{
-				if (e.ClickCount == 2)
-				{
-					// Doppelklick: Maximieren oder wiederherstellen
-					this.WindowState = this.WindowState == WindowState.Maximized
-						? WindowState.Normal
-						: WindowState.Maximized;
-				}
-				else
-				{
-					// Einfaches DragMove für Fenster verschieben
-					this.DragMove();
-				}
+				Point mouseScreen = PointToScreen(e.GetPosition(this));
+				Rect restoreBounds = RestoreBounds;
+
+				WindowState = WindowState.Normal;
+
+				Left = mouseScreen.X - restoreBounds.Width / 2;
+				Top = mouseScreen.Y - 10;
 			}
+
+			DragMove();
+			WindowState = WindowState.Maximized;
 		}
 
 		private void Minimize_Click(object sender, RoutedEventArgs e)

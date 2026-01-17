@@ -5,6 +5,7 @@ using KDC2Keybinder.Core.Models.Superactions;
 using KDC2Keybinder.Core.Services;
 using KDC2Keybinder.Core.Utils;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace KCD2Keybinder.GUI.Shared.Pages
 {
@@ -14,6 +15,8 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 		private Superaction? selectedSuperaction;
 		private KeyboardLayout keyboardLayout = KeyboardLayout.QWERTY;
 		private MergeStore mergeStore = new();
+		private List<ModDeltaViewModel> selectedMods = [];
+		private bool canCreate;
 
 		[Inject]
 		public IFolderPickerService FolderPicker { get; set; } = null!;
@@ -21,6 +24,8 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 		public IUserSettingsService UserSettings { get; set; } = null!;
 		[Inject]
 		public ModKeybindManager KeybindManager { get; set; } = null!;
+		[Inject]
+		public ISnackbar Snackbar { get; set; } = null!;
 
 		private async Task PickGameFolder()
 		{
@@ -29,18 +34,84 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 			{
 				return;
 			}
+			if (path.Contains("KingdomComeDeliverance2") == false)
+			{
+				Snackbar.Add("Pick the KCD2 folder, you fool!", Severity.Warning);
+				path = await FolderPicker.PickFolderAsync();
+			}
+			if (string.IsNullOrWhiteSpace(path))
+			{
+				return;
+			}
 
 			UserSettings.Update(s => s.GamePath = path);
 		}
 
+		private async Task PickModFolder()
+		{
+			var path = await FolderPicker.PickFolderAsync();
+			if (string.IsNullOrWhiteSpace(path))
+			{
+				return;
+			}
+			//if (path.Contains("KingdomComeDeliverance2") == false)
+			//{
+			//	Snackbar.Add("Pick the KCD2 folder, you fool!", Severity.Warning);
+			//	path = await FolderPicker.PickFolderAsync();
+			//}
+			//if (string.IsNullOrWhiteSpace(path))
+			//{
+			//	return;
+			//}
+
+			UserSettings.Update(s => s.ModPath = path);
+		}
+
 		public void ApplyModChanges()
 		{
+			if (KeybindManager.MergedKeybindStore is null)
+			{
+				Snackbar.Add("Load Keybind Data first", Severity.Info);
+				return;
+			}
+
+			foreach (var mod in selectedMods)
+			{
+				MergeMod(mod);
+			}
+			selectedMods.Clear();
 			KeybindManager.ApplyAllToMergedStore(mergeStore);
+			Snackbar.Add("Merging successful", Severity.Success);
+			canCreate = true;
+		}
+
+
+
+		private void ToggleMod(ModDeltaViewModel mod)
+		{
+			var foundMod = selectedMods.FirstOrDefault(x => x.ModId == mod.ModId);
+
+			if (foundMod is null)
+			{
+				selectedMods.Add(mod);
+			}
+			else
+			{
+				selectedMods.Remove(mod);
+			}
 		}
 
 		public void BuildMod()
 		{
+			if (KeybindManager.MergedKeybindStore is null)
+			{
+				Snackbar.Add("Load Keybind Data first", Severity.Info);
+				return;
+			}
+
 			KeybindManager.BuildMod();
+			Snackbar.Add("Creating Mod successful", Severity.Success);
+			canCreate = false;
 		}
 
 		public void MergeMod(ModDeltaViewModel delta)
@@ -54,17 +125,6 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 			{
 				mergeStore.AddActionMap(am.Name, delta.ModId, am);
 			}
-		}
-
-		private async Task PickModFolder()
-		{
-			var path = await FolderPicker.PickFolderAsync();
-			if (string.IsNullOrWhiteSpace(path))
-			{
-				return;
-			}
-
-			UserSettings.Update(s => s.ModPath = path);
 		}
 
 		private List<Superaction> GetKeybindSuperactions()
@@ -90,16 +150,6 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 			return superactions.Where(superactions => superactions.Controls.Any(control => control.Input.ToLower() == activeKey.ToLower())).Select(x => x).ToList();
 		}
 
-		private List<ModData> GetMods()
-		{
-			if (KeybindManager is null)
-			{
-				return [];
-			}
-
-			return KeybindManager.Mods;
-		}
-
 		private void SelectSuperaction(Superaction? superaction)
 		{
 			if (superaction is null)
@@ -113,6 +163,13 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 
 		private void LoadData()
 		{
+			if (string.IsNullOrEmpty(UserSettings.Current.GamePath) ||
+				string.IsNullOrEmpty(UserSettings.Current.ModPath))
+			{
+				Snackbar.Add("Pick folders!", Severity.Info);
+				return;
+			}
+
 			KeybindManager.LoadBaseGame(Resources.IPLGameData);
 			if (!string.IsNullOrEmpty(UserSettings.Current.ModPath))
 			{

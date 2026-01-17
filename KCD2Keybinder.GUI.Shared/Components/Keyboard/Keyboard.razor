@@ -1,4 +1,5 @@
-﻿<div class="keyboard">
+﻿<div style="display: flex; flex-direction: row; width: fit-content; gap: 2px; margin: 0 auto; align-items: center;">
+<div class="keyboard">
 	<!-- F-Keys -->
 	<div class="keyboard-row" style="padding-bottom: 16px;">
 		<Key Label="esc" Value="escape" IsActivated="@(activeKey == "escape")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("escape")" />
@@ -153,6 +154,10 @@
 			<Key KeySize="Models.KeySize.Medium" Label="ctrl" Value="rctrl" IsActivated="@(activeKey == "rctrl")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("rctrl")" />
 		</div>
 	</div>
+</div>
+<Key KeySize="Models.KeySize.Medium" Label="" Value="mouse1" IsMouse Mouse="Mouse.Left" IsActivated="@(activeKey == "mouse1")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("mouse1")" />
+<Key KeySize="Models.KeySize.Medium" Label="" Value="mouse3" IsMouse Mouse="Mouse.Middle" IsActivated="@(activeKey == "mouse3")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("mouse3")" />
+<Key KeySize="Models.KeySize.Medium" Label="" Value="mouse2" IsMouse Mouse="Mouse.Right" IsActivated="@(activeKey == "mouse2")" KeyPressed="OnKeyPressed" HasConflict="@MergeStore.HasConflict("mouse2")" />
 </div>
 
 <style>

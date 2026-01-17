@@ -57,11 +57,11 @@
                                 ToolTip="Minimieren">
                             ─
                         </Button>
-                        <Button Click="MaximizeRestore_Click"
+                        <!--<Button Click="MaximizeRestore_Click"
                                 Style="{StaticResource TitlebarButtonStyle}"
                                 ToolTip="Maximieren">
                             ☐
-                        </Button>
+                        </Button>-->
                         <Button Click="Close_Click"
                                 Style="{StaticResource CloseButtonStyle}"
                                 ToolTip="Schließen">

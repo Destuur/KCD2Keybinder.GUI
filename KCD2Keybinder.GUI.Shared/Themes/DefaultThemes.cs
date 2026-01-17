@@ -23,7 +23,7 @@ namespace KCD2Keybinder.GUI.Shared.Themes
 				TextDisabled = "#7a7a7d",
 				ActionDisabledBackground = "#a14b0044",
 				BackgroundGray = "#000000",
-				Dark = "#ffffff",
+				Dark = "#000000",
 				DarkContrastText = "#ffffff",
 				DarkDarken = "#ffffff",
 				DarkLighten = "#000000",

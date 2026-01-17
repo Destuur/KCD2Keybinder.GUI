@@ -99,6 +99,7 @@ namespace KDC2Keybinder.Core
 						break;
 				}
 			}
+			DeltaViewModels.Clear();
 		}
 
 		#region --- Load Base Game ---

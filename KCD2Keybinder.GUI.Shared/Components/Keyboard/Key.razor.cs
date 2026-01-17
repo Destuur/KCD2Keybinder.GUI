@@ -12,9 +12,13 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 		[Parameter]
 		public bool HasConflict { get; set; }
 		[Parameter]
+		public bool IsMouse { get; set; }
+		[Parameter]
 		public int Size { get; set; } = 64;
 		[Parameter]
 		public KeySize KeySize { get; set; } = KeySize.Small;
+		[Parameter]
+		public Mouse Mouse { get; set; }
 		[Parameter]
 		public bool IsActivated { get; set; }
 		[Parameter]
@@ -39,6 +43,17 @@ namespace KCD2Keybinder.GUI.Shared.Components.Keyboard
 
 		private string GetKey()
 		{
+			if (IsMouse)
+			{
+				return Mouse switch
+				{
+					Mouse.Left => "_content/KCD2Keybinder.GUI.Shared/images/mouse_1.png",
+					Mouse.Middle => "_content/KCD2Keybinder.GUI.Shared/images/mouse_3.png",
+					Mouse.Right => "_content/KCD2Keybinder.GUI.Shared/images/mouse_2.png",
+					_ => "_content/KCD2Keybinder.GUI.Shared/images/mouse_1.png",
+				};
+			}
+
 			return KeySize switch
 			{
 				KeySize.Small => "_content/KCD2Keybinder.GUI.Shared/images/key.png",

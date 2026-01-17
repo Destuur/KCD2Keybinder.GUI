@@ -1,20 +1,20 @@
 ﻿@page "/"
 
 <div style="display: flex; flex-direction: column; height: 100vh;">
-	<div style="height: 55%; flex: 1; display: flex; border: solid 1px blue; align-content: center; padding: 16px;">
+	<div style="height: 55%; flex: 1; display: flex; align-content: center; padding: 16px;">
 
-		<div class="keybind-list">
+		<div class="keybind-list box">
 
 			<!-- HEADER -->
 			<div class="keybind-header">
 				<div class="col-name">
-					<MudText Typo="Typo.h6">Name</MudText>
+					<MudText Typo="Typo.h6" Style="font-weight: bold;">Name</MudText>
 				</div>
 				<div class="col-a">
-					<MudText Typo="Typo.h6">Actions</MudText>
+					<MudText Typo="Typo.h6" Style="font-weight: bold;">Actions</MudText>
 				</div>
 				<div class="col-b">
-					<MudText Typo="Typo.h6">Control</MudText>
+					<MudText Typo="Typo.h6" Style="font-weight: bold;">Control</MudText>
 				</div>
 			</div>
 
@@ -43,7 +43,7 @@
 			</div>
 
 		</div>
-		<div style="flex: 1; border: solid 1px blue; align-content: center; display: flex; flex-direction: column;">
+		@* 		<div style="flex: 1; align-content: center; display: flex; flex-direction: column;">
 			<div class="keybind-list">
 
 				<!-- HEADER -->
@@ -116,39 +116,43 @@
 				</div>
 
 			</div>
+		</div> *@
+		<div style="flex: 1; align-content: center;">
+			<MudStack Justify="Justify.Center"
+			Spacing="10">
+				<MudText Typo="Typo.h2"
+						 style="text-align: center;">
+					<strong>@(string.IsNullOrEmpty(activeKey) ? "Press any Key" : activeKey)</strong>
+				</MudText>
+
+				<MudButton OnClick="BuildMod"
+						   Variant="Variant.Filled"
+						   Color="Color.Primary"
+				Style="@($"visibility: {(canCreate ? "visible" : "hidden")}")">
+					<MudText Typo="Typo.h4"><strong>Create Mod</strong></MudText>
+				</MudButton>
+			</MudStack>
 		</div>
-		<div style="flex: 1; border: solid 1px blue; align-content: center;">
-			<MudText Typo="Typo.h4"
-					 style="text-align: center;">
-				@(string.IsNullOrEmpty(activeKey) ? "Taste auswählen" : activeKey)
-			</MudText>
-			<MudButton OnClick="ApplyModChanges">
-				Bindings Mergen
-			</MudButton>
-			<MudButton OnClick="BuildMod">
-				Create Mod
-			</MudButton>
-		</div>
-		<div style="flex: 1; border: solid 1px blue; align-content: center;">
-		</div>
+		@* 		<div style="flex: 1; align-content: center;">
+		</div> *@
 		<!-- Mod List-->
 		<div class="keybind-list">
 
 			<!-- HEADER -->
 			<div class="keybind-header">
 				<div class="col-name">
-					<MudText Typo="Typo.h6">Name</MudText>
+					<MudText Typo="Typo.h6" Style="font-weight: bold;">Name</MudText>
 				</div>
 				<div class="col-a">
 					<MudTooltip Text="Superactions"
-						Placement="Placement.Top">
-					<MudText Typo="Typo.h6">SA</MudText>
+								Placement="Placement.Top">
+						<MudText Typo="Typo.h6" Style="font-weight: bold;">SA</MudText>
 					</MudTooltip>
 				</div>
 				<div class="col-b">
 					<MudTooltip Text="ActionMaps"
 								Placement="Placement.Top">
-					<MudText Typo="Typo.h6">AM</MudText>
+						<MudText Typo="Typo.h6" Style="font-weight: bold;">AM</MudText>
 					</MudTooltip>
 				</div>
 			</div>
@@ -166,12 +170,15 @@
 
 					<div class="keybind-row">
 						<div class="col-name">
-							<MudText style="font-family: KCD;">
-								@delta.ModId
-							</MudText>
-							<MudButton OnClick="_ => MergeMod(delta)">
-								Do Stuff
-							</MudButton>
+							<MudStack Row AlignItems="AlignItems.Center" Style="color: black;">
+								<MudCheckBox T="bool"
+											 Value="selectedMods.FirstOrDefault(x => x.ModId == delta.ModId) is not null"
+											 ValueChanged="_ => ToggleMod(delta)" 
+											 Color="Color.Dark" />
+								<MudText style="font-family: KCD;">
+									@delta.ModId
+								</MudText>
+							</MudStack>
 						</div>
 						<div class="col-a">
 							<MudText style="font-family: KCD;">
@@ -191,8 +198,8 @@
 
 	</div>
 
-	<div style="height: 45%; border: solid 1px red; align-content: center; display: flex; padding: 16px;">
-		<div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+	<div style="height: 45%; align-content: center; display: flex; padding: 16px;">
+		<div style="flex: 2; display: flex; flex-direction: column; gap: 8px; padding-left: 32px;">
 			<MudToggleGroup T="KeyboardLayout"
 							@bind-value="keyboardLayout"
 							Outlined
@@ -213,21 +220,29 @@
 			<div>
 				<MudTextField T="string"
 							  Adornment="Adornment.End"
-							  Value="@UserSettings.Current.GamePath"
+							  Value="@UserSettings.Current.ModPath"
 							  AdornmentIcon="@Icons.Material.Filled.Folder"
 							  OnAdornmentClick="PickModFolder"
 							  Label="Mod Directory"
 							  Variant="Variant.Outlined"
 							  Margin="Margin.Dense" />
 			</div>
-			<MudButton OnClick="LoadData" Variant="Variant.Filled" Color="Color.Primary">Load KeybindData</MudButton>
+			<MudButton OnClick="LoadData"
+					   Variant="Variant.Filled"
+					   Color="Color.Primary">
+				Load Keybind Data
+			</MudButton>
+			<MudButton OnClick="ApplyModChanges"
+				Disabled="@(KeybindManager.DeltaViewModels is null || KeybindManager.DeltaViewModels.Count == 0 || selectedMods.Count == 0)"
+					   Variant="Variant.Filled"
+					   Color="Color.Primary">
+				Merge Bindings
+			</MudButton>
 		</div>
-		<div style="flex: 4;">
-			<Keyboard ActiveKeyChanged="OnActiveKeyChanged" 
-				Layout="keyboardLayout"
-				MergeStore="mergeStore" />
-		</div>
-		<div style="flex: 1;">
+		<div style="flex: 8;">
+			<Keyboard ActiveKeyChanged="OnActiveKeyChanged"
+					  Layout="keyboardLayout"
+					  MergeStore="mergeStore" />
 		</div>
 	</div>
 </div>
@@ -237,15 +252,23 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
-		height: 100%;
-		border: 1px solid blue;
+		height: 100%;    
+		border: 2px solid #b79b6c;
+    border-radius: 6px;
+		padding: 8px;
+		color: black;
+    background:
+        url("_content/KCD2Keybinder.GUI.Shared/images/parchment.png");
+
+    background-size: cover;
+    background-position: center;
 	}
 
 	.keybind-header,
 	.keybind-row {
 		display: flex;
 		padding: 4px 0;
-		border-bottom: 1px solid blue;
+		align-items: center;
 	}
 
 	.keybind-header {

@@ -8,6 +8,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>false</UseWindowsForms>
 		<UseStaticWebAssets>true</UseStaticWebAssets>
+		<ApplicationIcon>wwwroot\images\key.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,6 +16,7 @@
 	  <Content Remove="wwwroot\fonts\kcd_light.ttf" />
 	  <Content Remove="wwwroot\fonts\kcd_regular.ttf" />
 	  <Content Remove="wwwroot\fonts\warhorse_manuscript.ttf" />
+	  <Content Remove="wwwroot\images\credits_background.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,12 +35,9 @@
 	  <Resource Include="wwwroot\fonts\kcd_display.ttf" />
 	  <Resource Include="wwwroot\fonts\kcd_regular.ttf" />
 	  <Resource Include="wwwroot\fonts\warhorse_manuscript.ttf" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Update="wwwroot\images\credits_background.jpg">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
+	  <Resource Include="wwwroot\images\credits_background.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 </Project>
