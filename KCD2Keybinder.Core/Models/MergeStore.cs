@@ -27,6 +27,16 @@ namespace KDC2Keybinder.Core.Models
 			list.Add((modId, delta));
 		}
 
+		public void AddConflict(string name, string modId, Conflict delta)
+		{
+			if (!Changes.TryGetValue(name, out var list))
+			{
+				list = new List<(string, object)>();
+				Changes[name] = list;
+			}
+			list.Add((modId, delta));
+		}
+
 		public bool HasConflict(string key) => Changes.TryGetValue(key, out var list) && list.Count > 1;
 
 		public IEnumerable<string> GetConflictKeys() => Changes.Where(kvp => kvp.Value.Count > 1).Select(kvp => kvp.Key);

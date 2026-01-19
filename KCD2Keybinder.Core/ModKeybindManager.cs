@@ -97,6 +97,13 @@ namespace KDC2Keybinder.Core
 							ActionMaps = { [am.Name] = am }
 						});
 						break;
+
+					case Conflict conflict:
+						MergedKeybindStore.ApplyModDelta(new ModDelta
+						{
+							Conflicts = { [conflict.Id] = conflict }
+						});
+						break;
 				}
 			}
 			DeltaViewModels.Clear();
@@ -244,6 +251,19 @@ namespace KDC2Keybinder.Core
 				}
 			}
 
+			if (mod.Keybinds?.Conflicts is not null)
+			{
+				foreach (var conflict in mod.Keybinds.Conflicts)
+				{
+					if (!vanilla.ConflictsByName.TryGetValue(conflict.Id, out var baseConflict) || !ConflictEquals(baseConflict, conflict))
+					{
+						delta.Conflicts[conflict.Id] = conflict;
+
+						logger.LogDebug($"Conflict: {conflict.Id}");
+					}
+				}
+			}
+
 			return delta;
 		}
 
@@ -271,7 +291,8 @@ namespace KDC2Keybinder.Core
 				{
 					ModId = delta.ModId,
 					ChangedSuperactions = delta.Superactions.Values.ToList(),
-					ChangedActionMaps = delta.ActionMaps.Values.ToList()
+					ChangedActionMaps = delta.ActionMaps.Values.ToList(),
+					ChangedConflicts = delta.Conflicts.Values.ToList(),
 				});
 			}
 		}
@@ -315,6 +336,24 @@ namespace KDC2Keybinder.Core
 			{
 				if (!ActionElementEquals(aActions[i], bActions[i])) return false;
 			}
+
+			return true;
+		}
+
+		private static bool ConflictEquals(Conflict a, Conflict b)
+		{
+			if (a.Name != b.Name) return false;
+			if (a.Id != b.Id) return false;
+
+			if (!UnorderedEqual(
+				a.Includes.Select(i => i.Conflict),
+				b.Includes.Select(i => i.Conflict)))
+				return false;
+
+			if (!UnorderedEqual(
+				a.Superactions,
+				b.Superactions))
+				return false;
 
 			return true;
 		}

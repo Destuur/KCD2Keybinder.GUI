@@ -9,8 +9,9 @@ namespace KDC2Keybinder.Core.Models
 		public Keybinds VanillaKeybinds { get; private set; }
 		public Profile VanillaProfile { get; private set; }
 
-		public List<Superaction> Superactions { get; private set; } = new();
-		public List<ActionMap> ActionMaps { get; private set; } = new();
+		public List<Superaction> Superactions { get; private set; } = [];
+		public List<ActionMap> ActionMaps { get; private set; } = [];
+		public List<Conflict> Conflicts { get; private set; } = [];
 
 		public MergedKeybindStore(Keybinds vanillaKeybinds, Profile vanillaProfile)
 		{
@@ -19,6 +20,21 @@ namespace KDC2Keybinder.Core.Models
 
 			Superactions = vanillaKeybinds.Superactions.Select(CloneSuperaction).ToList();
 			ActionMaps = vanillaProfile.ActionMaps.Select(CloneActionMap).ToList();
+			Conflicts = vanillaKeybinds.Conflicts.Select(CloneConflict).ToList();
+		}
+
+		private static Conflict CloneConflict(Conflict conflict)
+		{
+			return new Conflict
+			{
+				Id = conflict.Id,
+				Name = conflict.Name,
+				Includes = conflict.Includes.Select(x => new IncludeConflict
+				{
+					Conflict = x.Conflict,
+				}).ToList(),
+				Superactions = conflict.Superactions.Select(CloneSuperaction).ToList(),
+			};
 		}
 
 		private static Superaction CloneSuperaction(Superaction sa)
@@ -89,6 +105,15 @@ namespace KDC2Keybinder.Core.Models
 					ActionMaps[index] = CloneActionMap(map.Value);
 				else
 					ActionMaps.Add(CloneActionMap(map.Value));
+			}
+
+			foreach (var conflict in delta.Conflicts)
+			{
+				var index = Conflicts.FindIndex(m => m.Id == conflict.Value.Id);
+				if (index >= 0)
+					Conflicts[index] = CloneConflict(conflict.Value);
+				else
+					Conflicts.Add(CloneConflict(conflict.Value));
 			}
 		}
 	}

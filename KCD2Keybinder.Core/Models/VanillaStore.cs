@@ -11,5 +11,6 @@ namespace KDC2Keybinder.Core.Models
 
 		public Dictionary<string, Superaction> SuperactionsByName { get; init; } = [];
 		public Dictionary<string, ActionMap> ActionMapsByName { get; init; } = [];
+		public Dictionary<string, Conflict> ConflictsByName { get; init; } = [];
 	}
 }

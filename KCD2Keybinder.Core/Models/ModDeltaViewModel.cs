@@ -8,5 +8,6 @@ namespace KDC2Keybinder.Core
 		public string ModId { get; set; } = "";
 		public List<Superaction> ChangedSuperactions { get; set; } = [];
 		public List<ActionMap> ChangedActionMaps { get; set; } = [];
+		public List<Conflict> ChangedConflicts { get; set; } = [];
 	}
 }

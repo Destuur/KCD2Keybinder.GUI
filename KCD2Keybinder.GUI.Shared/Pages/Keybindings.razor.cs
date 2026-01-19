@@ -125,6 +125,11 @@ namespace KCD2Keybinder.GUI.Shared.Pages
 			{
 				mergeStore.AddActionMap(am.Name, delta.ModId, am);
 			}
+
+			foreach (var conflict in delta.ChangedConflicts)
+			{
+				mergeStore.AddConflict(conflict.Id, delta.ModId, conflict);
+			}
 		}
 
 		private List<Superaction> GetKeybindSuperactions()

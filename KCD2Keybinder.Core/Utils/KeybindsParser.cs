@@ -170,7 +170,7 @@ namespace KDC2Keybinder.Core.Utils
 			}
 
 			// --- Conflicts ---
-			foreach (var conflict in mergedStore.VanillaKeybinds.Conflicts)
+			foreach (var conflict in mergedStore.Conflicts)
 			{
 				var conflictEl = new XElement("conflict");
 				if (!string.IsNullOrEmpty(conflict.Name))

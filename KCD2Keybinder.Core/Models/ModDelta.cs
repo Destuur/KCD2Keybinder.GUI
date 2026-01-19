@@ -9,5 +9,6 @@ namespace KDC2Keybinder.Core
 
 		public Dictionary<string, Superaction> Superactions { get; init; } = [];
 		public Dictionary<string, ActionMap> ActionMaps { get; init; } = [];
+		public Dictionary<string, Conflict> Conflicts { get; init; } = [];
 	}
 }
