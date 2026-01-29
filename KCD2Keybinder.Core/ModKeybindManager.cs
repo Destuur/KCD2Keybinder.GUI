@@ -36,7 +36,7 @@ namespace KDC2Keybinder.Core
 
 			var modDesc = modService.CreateNewMod();
 
-			var modRoot = Path.Combine(Resources.ModsDirectory, modDesc.Id);
+			var modRoot = Path.Combine(pathProvider.ModPath, modDesc.Id);
 			modService.WriteModManifest(modDesc);
 
 			WriteMergedModFiles(MergedKeybindStore, modRoot);
